@@ -21,9 +21,9 @@
 
 {{#all_user_clusters}}
 /**
- * Cluster{{asUpperCamelCase name}}{{asUpperCamelCase side}}
+ * Cluster{{asUpperCamelCase name}}
  */
-class Cluster{{asUpperCamelCase name}}{{asUpperCamelCase side}}
+class Cluster{{asUpperCamelCase name}}
 {
     static CLUSTER_NAME = '{{define}}'
     static CLUSTER_ID = {{asHex code 4}}
@@ -33,7 +33,13 @@ class Cluster{{asUpperCamelCase name}}{{asUpperCamelCase side}}
         {{asUpperCamelCase name}}: {{code}},
 {{/zcl_commands}}
     }
+}
 
+/**
+ * Cluster{{asUpperCamelCase name}}{{asUpperCamelCase side}}
+ */
+class Cluster{{asUpperCamelCase name}}{{asUpperCamelCase side}}
+{
     static Attribute = {
 {{#zcl_attributes_server}}
         {{asUpperCamelCase name}}: {{code}},
@@ -60,6 +66,13 @@ class Cluster{{asUpperCamelCase name}}{{asUpperCamelCase side}}
 {{/zcl_command_arguments}}
         ]
     }
+
+    static MapCommand{{asUpperCamelCase name}} = new Map([
+  {{#zcl_command_arguments}}
+        [{{index}}, '{{asLowerCamelCase label}}'],
+  {{/zcl_command_arguments}}
+    ])
+
 {{/zcl_commands}}
 
     // ============================================
@@ -97,7 +110,7 @@ class Cluster{{asUpperCamelCase name}}{{asUpperCamelCase side}}
         switch(path.CommandId)
         {
 {{#zcl_commands}}
-            case Cluster{{asUpperCamelCase parent.name}}{{asUpperCamelCase parent.side}}.Command.{{asUpperCamelCase name}}: this.on{{asUpperCamelCase name}}(msg, path); break;
+            case Cluster{{asUpperCamelCase parent.name}}.Command.{{asUpperCamelCase name}}: this.on{{asUpperCamelCase name}}(msg, path); break;
 {{/zcl_commands}}
         }
     }

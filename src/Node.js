@@ -91,6 +91,11 @@ class Node {
      * Get the SessionProtocol object for this Node.
      */
     get SessionProtocol() { return this._protocolSession }
+
+    /**
+     * Get the InteractionModel manager object for this Node.
+     */
+     get InteractionModel() { return this._protocolIM }
 }
 
 global.theNode = new Node()

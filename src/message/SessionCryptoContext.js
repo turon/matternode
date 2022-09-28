@@ -17,7 +17,7 @@
 const hkdf = require('futoin-hkdf')
 const logger = require('../util/Logger')
 
-const CHIP_CONFIG_SECURITY_TEST_MODE = 0
+const CHIP_CONFIG_SECURITY_TEST_MODE = 1
 const SECURITY_TEST_MODE_SECRET =  Buffer.from("Test secret for key derivation.\0", "utf-8")
 const SECURITY_TEST_MODE_SALT = Buffer.alloc(0)
 const SECURITY_TEST_MODE_INFO = Buffer.from("SessionKeys", "utf8")

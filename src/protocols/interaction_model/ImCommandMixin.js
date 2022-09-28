@@ -32,39 +32,13 @@ const Endpoints = require('../../../zzz_generated/Endpoints.json')
 ///     Module scoped tag maps from specification
 /// ==============================================================================
 
-const StatusIB = {
-    Status: 0,          ///< uint32
-    ClusterStatus: 1,   ///< uint32
-}
-
-const CommandDataIB = {
-    Path:  0,           ///< CommandPathIB
-    Data:  1,           ///< variable
-}
-
-const CommandStatusIB = {
-    Path:    0,         ///< CommandPathIB
-    Status:  1,         ///< StatusIB
-}
-
-const InvokeResponseIB = {
-    Data:    0,         ///< CommandDataIB
-    Status:  1,         ///< CommandStatusIB
-}
-
-const InvokeRequestMessage = {
-    SuppressResponse: 0,    ///< Boolean
-    TimedRequest: 1,        ///< Boolean
-    CommandList: 2,         ///< CommandDataIB[]
-}
-
-const InvokeResponseMessage = {
-    SuppressResponse: 0,    ///< Boolean
-    CommandResponses: 1,    ///< InvokeResponseIB[]
-}
 
 class ImCommandMixin
 {
+    // ================================================================================
+    //                                  IM SERVER
+    // ================================================================================
+
     onInvokeCommandRequest(msg) {
         logger.debug("IM: onInvokeCommandRequest")
 
@@ -76,17 +50,17 @@ class ImCommandMixin
 
         // Validate Command Request
         var params = result[0].value
-        var suppressResponse = TlvReader.findTag(params, InvokeRequestMessage.SuppressResponse)
-        var timedRequest = TlvReader.findTag(params, InvokeRequestMessage.TimedRequest)
-        var commandList = TlvReader.findTag(params, InvokeRequestMessage.CommandList)
+        var suppressResponse = TlvReader.findTag(params, ImConst.InvokeRequestMessage.SuppressResponse)
+        var timedRequest = TlvReader.findTag(params, ImConst.InvokeRequestMessage.TimedRequest)
+        var commandList = TlvReader.findTag(params, ImConst.InvokeRequestMessage.CommandList)
 
         commandList.forEach(command => {
             // CommandPathIB = //0:endpoint/1:cluster/2:command
-            var pathTlv = TlvReader.findTag(command.value, CommandDataIB.Path)
+            var pathTlv = TlvReader.findTag(command.value, ImConst.CommandDataIB.Path)
             var path = new CommandPath(pathTlv)
             path.trace()
 
-            var commandData = TlvReader.findTag(command.value, CommandDataIB.Data)
+            var commandData = TlvReader.findTag(command.value, ImConst.CommandDataIB.Data)
             logger.trace(JSON.stringify(commandData, null, 2))
 
             // Dispatch command path w/ commandData
@@ -117,13 +91,13 @@ class ImCommandMixin
 
     static TemplateMsgCommandResponseStatus = function(params) {
         var json = { "type": "struct", "value": [
-            { "tag": InvokeResponseMessage.SuppressResponse, "type": "boolean", "value": params.supressedResponse },
-            { "tag": InvokeResponseMessage.CommandResponses, "type": "array", "value": [ // InvokeResponseIBs []
+            { "tag": ImConst.InvokeResponseMessage.SuppressResponse, "type": "boolean", "value": params.supressedResponse },
+            { "tag": ImConst.InvokeResponseMessage.CommandResponses, "type": "array", "value": [ // InvokeResponseIBs []
                 { "type": "struct", "value": [                                           // Anonymous array entry
-                    { "tag": InvokeResponseIB.Status, "type": "struct", "value": [       // CommandStatusIB
-                        params.commandPath.template(CommandStatusIB.Path),               // CommandPathIB
-                        { "tag": CommandStatusIB.Status, "type": "struct", "value": [    // StatusIB
-                            { "tag": StatusIB.Status, "value": params.commandStatus },
+                    { "tag": ImConst.InvokeResponseIB.Status, "type": "struct", "value": [       // CommandStatusIB
+                        params.commandPath.template(ImConst.CommandStatusIB.Path),               // CommandPathIB
+                        { "tag": ImConst.CommandStatusIB.Status, "type": "struct", "value": [    // StatusIB
+                            { "tag": ImConst.StatusIB.Status, "value": params.commandStatus },
                         ]}
                     ]}
                 ]}
@@ -158,7 +132,7 @@ class ImCommandMixin
                 { "type": "struct", "value": [                                           // Anonymous array entry
                     { "tag": InvokeResponseIB.Data, "type": "struct", "value": [         // CommandDataIB
                         params.commandPath.template(CommandDataIB.Path),                 // CommandPathIB
-                        { "tag": CommandDataIB.Data, "type": "struct", "value": params.commandData },
+                        { "tag": ImConst.CommandDataIB.Data, "type": "struct", "value": params.commandData },
                     ]}
                 ]}
             ]},
@@ -188,6 +162,58 @@ class ImCommandMixin
     onInvokeCommandResponse(msg) {
         logger.debug("IM: onInvokeCommandResponse")
     }
+
+    // ================================================================================
+    //                                  IM CLIENT
+    // ================================================================================
+
+    sendInvokeCommandRequestRaw(exchange, commandPayload) {
+        logger.debug("IM: sendInvokeCommandRequest")
+        tracer.begin('IM tx InvokeCommandRquest')
+
+        var msg = new Message()
+        msg.ProtocolId = ImConst.PROTOCOL_ID
+        msg.ProtocolOpcode = ImConst.Command.CommandRequest
+        msg.AppPayload = commandPayload
+
+        exchange.sendMessage(msg)
+        tracer.end('IM tx InvokeCommandRequest')
+    }
+
+    static TemplateMsgCommandRequestData = function(params) {
+        var json = { "type": "struct", "value": [
+            { "tag": ImConst.InvokeRequestMessage.SuppressResponse, "type": "boolean", "value": params.suppressResponse },
+            { "tag": ImConst.InvokeRequestMessage.TimedRequest, "type": "boolean", "value": params.timedRequest },
+            { "tag": ImConst.InvokeRequestMessage.CommandList, "type": "array", "value": [ // CommandDataIBs []
+                { "type": "struct", "value": [                                           // Anonymous array entry
+                    params.commandPath.template(ImConst.CommandDataIB.Path),                 // CommandPathIB
+                    { "tag": ImConst.CommandDataIB.Data, "type": "struct", "value": params.commandData }, // CommandFields
+                ]}
+            ]},
+            { "tag": ImConst.CommonAction.ImRevision, "type": "uint8", "value": ImConst.IM_VERSION }, // Add IM version
+        ]}
+        return json
+    }
+
+    sendInvokeCommandRequestData(exchange, commandPath, commandData) {
+        logger.debug("IM: sendInvokeCommandResponseStatus")
+
+        var params = {
+            suppressResponse: false,
+            timedRequest: false,
+            commandPath: commandPath,
+            commandData: commandData
+        }
+
+        var writer = new TlvWriter()
+        var json = ImCommandMixin.TemplateMsgCommandRequestData(params)
+        var payload = writer.encode(json).Buffer
+
+        logger.trace(JSON.stringify(json, null, 2))
+
+        this.sendInvokeCommandRequestRaw(exchange, payload)
+    }
+
 }
 
 module.exports = ImCommandMixin

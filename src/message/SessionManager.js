@@ -69,7 +69,7 @@ class SessionManager extends EventEmitter
 
     getSecureSession(sessionId)
     {
-        var session = this.SecureSessions.find(s => s.PeerSessionId === sessionId);
+        var session = this.SecureSessions.find(s => s.LocalSessionId === sessionId);
         return session
     }
 

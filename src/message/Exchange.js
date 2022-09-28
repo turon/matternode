@@ -24,7 +24,7 @@ const tracer = require('../util/Tracer')
  */
 class Exchange extends EventEmitter
 {
-    constructor(exchangeId, session, isInitiator = true)
+    constructor(exchangeId, session, IsInitiator = true)
     {
         super()
         this._session = session
@@ -32,9 +32,9 @@ class Exchange extends EventEmitter
         this._exchangeAcl = undefined
         this._dispatch = undefined
         this._responseTimeout = 0
-        this._isInitiator = isInitiator
-        this._isReliable = false
-        this._isAck = false
+        this._IsInitiator = IsInitiator
+        this._IsReliable = false
+        this._IsAck = false
         this._ackCounter = 0
 
         tracer.objNew('exchange obj', {id:exchangeId})
@@ -49,18 +49,18 @@ class Exchange extends EventEmitter
     {
         return ((msg.ExchangeId === this._exchangeId) &&
                 (msg.SessionId === this._session.LocalSessionId) &&
-                (msg.Iflag != this.isInitiator) &&
+                (msg.Iflag != this.IsInitiator) &&
                 (session === this._session))
     }
 
-    get isInitiator() { return this._isInitiator }
-    set isInitiator(v) { this._isInitiator = !!v }
+    get IsInitiator() { return this._IsInitiator }
+    set IsInitiator(v) { this._IsInitiator = !!v }
 
-    get isReliable() { return this._isReliable }
-    set isReliable(v) { this._isReliable = !!v }
+    get IsReliable() { return this._IsReliable }
+    set IsReliable(v) { this._IsReliable = !!v }
 
-    get isAck() { return this._isAck }
-    set isAck(v) { this._isAck = !!v }
+    get IsAck() { return this._IsAck }
+    set IsAck(v) { this._IsAck = !!v }
 
     get AckCounter() { return this._ackCounter }
     set AckCounter(v) { this._ackCounter = v }
@@ -69,10 +69,10 @@ class Exchange extends EventEmitter
     {
         msg.ExchangeId = this._exchangeId
         msg.ExchangeFlags = 0
-        msg.Iflag = this.isInitiator
-        msg.Rflag = this.isReliable
+        msg.Iflag = this.IsInitiator
+        msg.Rflag = this.IsReliable
     
-        if (this.isAck) {
+        if (this.IsAck) {
             msg.Aflag = 1
             msg.AckCounter = this.AckCounter
         }
@@ -90,7 +90,7 @@ class Exchange extends EventEmitter
         ack.ExchangeFlags = 0
         ack.Aflag = 1
         ack.AckCounter = this.AckCounter
-        ack.Iflag = this.isInitiator
+        ack.Iflag = this.IsInitiator
         this.Session.sendMessage(ack)
     }
 }

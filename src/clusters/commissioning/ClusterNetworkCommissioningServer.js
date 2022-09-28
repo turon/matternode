@@ -240,9 +240,9 @@ class ClusterNetworkCommissioningServer
         logger.debug(this.constructor.name+".onCommand "+path.CommandId)
         switch(path.CommandId)
         {
-            case ClusterGeneralCommissioningServer.Command.ScanNetworks: this.onScanNetworks(msg, path); break;
-            case ClusterGeneralCommissioningServer.Command.ScanNetworkResponse: this.onScanNetworkResponse(msg, path); break;
-            case ClusterGeneralCommissioningServer.Command.AddOrUpdateWiFiNetwork: this.onAddOrUpdateWiFiNetwork(msg, path); break;
+            case ClusterGeneralCommissioning.Command.ScanNetworks: this.onScanNetworks(msg, path); break;
+            case ClusterGeneralCommissioning.Command.ScanNetworkResponse: this.onScanNetworkResponse(msg, path); break;
+            case ClusterGeneralCommissioning.Command.AddOrUpdateWiFiNetwork: this.onAddOrUpdateWiFiNetwork(msg, path); break;
         }
     }
 

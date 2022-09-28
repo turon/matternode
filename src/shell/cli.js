@@ -22,6 +22,7 @@ const cmd_crypto = require('./cmd_crypto')
 const cmd_log = require('./cmd_log')
 const cmd_mdns = require('./cmd_mdns')
 const cmd_msg = require('./cmd_msg')
+const cmd_pair = require('./cmd_pair')
 const cmd_pase = require('./cmd_pase')
 const cmd_tlv = require('./cmd_tlv')
 const cmd_trace = require('./cmd_trace')
@@ -114,6 +115,11 @@ var theCommandList = [
         "command": "nodenum",
         "help":    "Get and set the Node Number",
         "handler": cmd_config.doNodeNum,
+    },
+    {
+        "command": "pair",
+        "help":    "Commission a node",
+        "handler": cmd_pair.doPair,
     },
     {
         "command": "pase",

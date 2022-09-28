@@ -73,6 +73,9 @@ class Session {
 
     get IsSecure() { return this._secure }
 
+    get IsInitiator() { return this._initiator }
+    set IsInitiator(v) { this._initiator = v }
+
     get PeerMessageCounter() { return this._peerMessageCounter }
     set PeerMessageCounter(v) { this._peerMessageCounter = v }
 
@@ -144,7 +147,7 @@ class Session {
 
         // Use appropriate session key based on Iflag: I2R or R2I
         var buf = msg.Encrypted
-        var keyIndex = (this._initiator) ? 1 : 0    // TODO: use direction of session rx
+        var keyIndex = (this._initiator) ? 1 : 0
         var key = this.#cryptoContext._keys[keyIndex]
         logger.trace("Using session key ["+keyIndex+"]: " + key.toString('hex'))
         var dmsg = MsgCodec.decrypt(buf, key)

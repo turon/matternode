@@ -41,6 +41,38 @@ class ImConst {
         ImRevision:                   0xFF,
     }
 
+    static StatusIB = {
+        Status: 0,          ///< uint32
+        ClusterStatus: 1,   ///< uint32
+    }
+    
+    static CommandDataIB = {
+        Path:  0,           ///< CommandPathIB
+        Data:  1,           ///< variable
+    }
+    
+    static CommandStatusIB = {
+        Path:    0,         ///< CommandPathIB
+        Status:  1,         ///< StatusIB
+    }
+    
+    static InvokeResponseIB = {
+        Data:    0,         ///< CommandDataIB
+        Status:  1,         ///< CommandStatusIB
+    }
+    
+    static InvokeRequestMessage = {
+        SuppressResponse: 0,    ///< Boolean
+        TimedRequest: 1,        ///< Boolean
+        CommandList: 2,         ///< CommandDataIB[]
+    }
+    
+    static InvokeResponseMessage = {
+        SuppressResponse: 0,    ///< Boolean
+        CommandResponses: 1,    ///< InvokeResponseIB[]
+    }
+
+
     static TemplateMsgStatusResponse = function(params) {
         return { "type": "struct", "value": [
             { "tag": 0, "type": "uint32", "value": param.status },
@@ -84,7 +116,7 @@ class ImConst {
         ]}
     }
 
-    static CommandPathIB = function(params) {
+    static TemplateCommandPathIB = function(params) {
         return { "tag": "{{tag}}", "type": "list", "value": [
             { "tag": 0, "type": "uint16", "value": params.endpointId },
             { "tag": 1, "type": "uint16", "value": params.clusterId },
@@ -92,7 +124,7 @@ class ImConst {
         ]}
     }
 
-    static CommandDataIB = function(params) {
+    static TemplateCommandDataIB = function(params) {
         return { "type": "struct", "value": [
             { "tag": 0, "type": "list", "value": [
                 { "tag": 0, "type": "uint16", "value": params.endpointId },
@@ -103,7 +135,7 @@ class ImConst {
         ]}
     }
 
-    static CommandStatusIB = function(params) {
+    static TemplateCommandStatusIB = function(params) {
         return { "type": "struct", "value": [
             { "tag": 0, "type": "list", "value": [
                 { "tag": 0, "type": "uint16", "value": params.endpointId },

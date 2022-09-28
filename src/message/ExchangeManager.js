@@ -52,7 +52,7 @@ class ExchangeManager extends EventEmitter
         return exchange
     }
 
-    newExchange(session=null, msg=null, isInitiator=true)
+    newExchange(session=null, msg=null, IsInitiator=true)
     {
         var exchangeId
 
@@ -66,8 +66,8 @@ class ExchangeManager extends EventEmitter
             exchangeId = this._nextExchangeId++
         }
 
-        // exchangeMgr, exchangeId, session, isInitiator, delegate
-        var exchange = new Exchange(exchangeId, session, isInitiator)
+        // exchangeMgr, exchangeId, session, IsInitiator, delegate
+        var exchange = new Exchange(exchangeId, session, IsInitiator)
 
         this._exchanges.push(exchange)
 
@@ -102,9 +102,9 @@ class ExchangeManager extends EventEmitter
                 // If an unsolicited message handler matches the protocol id, create exchange.
                 logger.warn("message has no exchange -- creating new one for protocol id = "+msg.ProtocolId)
                 exchange = this.newExchange(session, msg)
-                exchange.isInitiator = !msg.Iflag
-                exchange.isReliable = msg.Rflag
-                exchange.isAck = msg.Rflag
+                exchange.IsInitiator = !msg.Iflag
+                exchange.IsReliable = msg.Rflag
+                exchange.IsAck = msg.Rflag
                 exchange.AckCounter = msg.MessageCounter
                 msg.Exchange = exchange
                 this.emit(msg.ProtocolId, msg, exchange)
@@ -118,14 +118,14 @@ class ExchangeManager extends EventEmitter
 
         /*
 
-        if (!exchange && msg.isInitiator)
+        if (!exchange && msg.IsInitiator)
         {
             // Unsolicited message handling
 
             var handler = this._protocolHandlers.find(h => h.ProtocolId === msg.ProtocolId);
             if (handler != undefined)
             {
-                exchange = this.newExchange(msg.ExchangeId, !msg.isInitiator, handler)
+                exchange = this.newExchange(msg.ExchangeId, !msg.IsInitiator, handler)
                 handler.onMessage(msg, dmsg)
             }
         }

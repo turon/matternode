@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+const EventEmitter = require("events")
+
 const spake2js = require('spake2')
 const crypto = require('crypto')
 const EC = require('elliptic').ec
@@ -24,7 +26,7 @@ const SRC = '../../'
 const logger = require(SRC+'util/Logger')
 const tracer = require(SRC+'util/Tracer')
 
-const Crypto = require('../../crypto/Crypto')
+const Crypto = require(SRC+'crypto/Crypto')
 const SessionProtocolConst = require("./SessionProtocolConst")
 const StatusReport = require("./StatusReport")
 const { TlvReader } = require(SRC+'tlv/TlvReader')
@@ -41,7 +43,7 @@ const Message = require(SRC+"message/Message")
  * - [ ] Fix state machine to be tolerant to filures
  * - [ ] Properly activate negotiated key for subsequnet session
  */
-class PaseSession {
+class PaseSession extends EventEmitter {
     #secret
 
     static RESPONSE_TIMEOUT     = 10000
@@ -68,6 +70,8 @@ class PaseSession {
 
     constructor(sessionMgr)
     {
+        super()
+
         this._establishmentExchange = undefined
         this._state = PaseSession.State.IDLE
         this._stateTimeout = undefined
@@ -114,6 +118,7 @@ class PaseSession {
         this._stateTimeout = setTimeout(() => {
             logger.error("PASE: ERROR - Session Establishment Timeout state = "+self._state)
             self.setState(PaseSession.State.IDLE)
+            self.emit("onPairingError")
         }, interval)
     }
 
@@ -136,7 +141,7 @@ class PaseSession {
     {
         var pase = new PaseSession(sessionMgr)
         pase.Exchange = exchange
-        pase.Exchange.isReliable = true
+        pase.Exchange.IsReliable = true
         // Subscribe to responses
         pase.Exchange.on("message", (msg, exchange) => { pase.onExchangeMessage(msg, exchange) })
 
@@ -347,6 +352,9 @@ class PaseSession {
      */
     startPase(host, port, passcode)
     {
+        this._ipHost = host
+        this._ipPort = port
+
         logger.debug("PASE: start handshake")
         if (this._state != PaseSession.State.IDLE) {
             logger.error("PASE: ERROR - invalid state = "+this._state)
@@ -527,7 +535,7 @@ class PaseSession {
         msg.AppPayload = payload
 
         this.setState(PaseSession.State.AWAIT_PAKE2)
-        this.Exchange.isAck = 1  // TODO: automate within Exchange
+        this.Exchange.IsAck = 1  // TODO: automate within Exchange
         this.Exchange.sendMessage(msg)
 
         tracer.end('PASE tx Pake1')
@@ -681,11 +689,11 @@ class PaseSession {
 
         this.setState(PaseSession.State.IDLE)
         this.Exchange.sendMessage(msg)
+        logger.debug("PASE: sent Pake3")
 
         this.createSecureSession()
 
         tracer.end('PASE tx Pake3')
-        logger.debug("PASE: sent Pake3")
     }
 
     onPake3(msg)
@@ -748,6 +756,10 @@ class PaseSession {
         var salt = Buffer.alloc(0)
         var info = Buffer.from("SessionKeys", "utf8")
         session.initFromSecret(secret, salt, info)
+        session.PeerInfo = {
+            port: this._ipPort,
+            address: this._ipHost,
+        }
     }
 
     /**
@@ -762,12 +774,15 @@ class PaseSession {
         var session
         if (this._localRole == PaseSession.Role.INITIATOR) {
             session = this._sessionManager.newSession(this._initiatorSessionId, this._responderSessionId)
+            session.IsInitiator = true
         } else {
             session = this._sessionManager.newSession(this._responderSessionId, this._initiatorSessionId)
+            session.IsInitiator = false
         }
         //session.PeerNodeId = msg.SourceNodeId
 
         this.initPaseSession(session)
+        this.emit("onPairingComplete", session)
     }
 
     sendPakeError()

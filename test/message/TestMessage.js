@@ -226,7 +226,7 @@ describe('Test Message encode', () => {
 
 const theTestMessageCryptoVector = [
     {
-        name: "basic message",
+        name: "basic pase message (no payload)",
         plain: "00b80b00393000000564ee0e207d",
         encrypted: "00b80b00393000005a989ae42e8d847f535c3007e6150cd65867f2b817db",
         privacy: "00b80b00393000005a989ae42e8d847f535c3007e6150cd65867f2b817db",
@@ -235,6 +235,28 @@ const theTestMessageCryptoVector = [
         privacyKey: "5eded244e5532b3cdc23409dbad052d2",
         privacyNonce: "0bb807e6150cd65867f2b817db",
         nonce: "00393000000000000000000000",
+    },
+    {
+        name: "basic pase message (short payload)",
+        plain: "00b80b00393000000564ee0e207d1122334455",
+        encrypted: "00b80b00393000005a989ae42e8d0f7f885dfb2faa8949cf730a5728e0354610a0c4a7",
+        privacy: "00b80b00393000005a989ae42e8d0f7f885dfb2faa8949cf730a5728e0354610a0c4a7",
+
+        encryptKey: "5eded244e5532b3cdc23409dbad052d2",
+        privacyKey: "5eded244e5532b3cdc23409dbad052d2",
+        privacyNonce: "0bb8730a5728e0354610a0c4a7",
+        nonce: "00393000000000000000000000",
+    },
+    {
+        name: "basic pase message (short payload w/ privacy enabled)",
+        plain: "00b80b80393000000564ee0e207d1122334455",
+        encrypted: "00b80b8039300000aa26a0f901efce9f9a67c8137917d15b81d15d313308319758ea3f",
+        privacy: "00b80b8087beef06aa26a0f901efce9f9a67c8137917d15b81d15d313308319758ea3f",
+
+        encryptKey: "5eded244e5532b3cdc23409dbad052d2",
+        privacyKey: "5eded244e5532b3cdc23409dbad052d2",
+        privacyNonce: "0bb881d15d313308319758ea3f",
+        nonce: "80393000000000000000000000",
     },
     {
         name: "secure group message",

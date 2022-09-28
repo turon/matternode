@@ -27,7 +27,8 @@
 	    "64": "ClusterFixedLabelServer",
 	    "65": "ClusterUserLabelServer",
 	    "1029": "ClusterRelativeHumidityMeasurementServer",
-	    "1295": "ClusterTestClusterServer"
+	    "4294048774": "ClusterFaultInjectionServer",
+	    "4294048774": "ClusterFaultInjectionServer"
     },
     "1" : {
 	    "3": "ClusterIdentifyServer",
@@ -39,7 +40,7 @@
 	    "15": "ClusterBinaryInputBasicServer",
 	    "29": "ClusterDescriptorServer",
 	    "30": "ClusterBindingServer",
-	    "37": "ClusterBridgedActionsServer",
+	    "37": "ClusterActionsServer",
 	    "47": "ClusterPowerSourceServer",
 	    "59": "ClusterSwitchServer",
 	    "64": "ClusterFixedLabelServer",
@@ -60,7 +61,6 @@
 	    "1028": "ClusterFlowMeasurementServer",
 	    "1029": "ClusterRelativeHumidityMeasurementServer",
 	    "1030": "ClusterOccupancySensingServer",
-	    "1280": "ClusterIasZoneServer",
 	    "1283": "ClusterWakeOnLanServer",
 	    "1284": "ClusterChannelServer",
 	    "1285": "ClusterTargetNavigatorServer",
@@ -73,8 +73,9 @@
 	    "1292": "ClusterApplicationLauncherServer",
 	    "1293": "ClusterApplicationBasicServer",
 	    "1294": "ClusterAccountLoginServer",
-	    "1295": "ClusterTestClusterServer",
-	    "2820": "ClusterElectricalMeasurementServer"
+	    "2820": "ClusterElectricalMeasurementServer",
+	    "4294048773": "ClusterTestClusterServer",
+	    "4294048773": "ClusterTestClusterServer"
     },
     "2" : {
 	    "4": "ClusterGroupsServer",
@@ -82,7 +83,11 @@
 	    "29": "ClusterDescriptorServer",
 	    "47": "ClusterPowerSourceServer",
 	    "1030": "ClusterOccupancySensingServer",
-	    "1280": "ClusterIasZoneServer"
+	    "1030": "ClusterOccupancySensingServer"
+    },
+    "65534" : {
+	    "49": "ClusterNetworkCommissioningServer",
+	    "49": "ClusterNetworkCommissioningServer"
     },
     "": {}
 }
