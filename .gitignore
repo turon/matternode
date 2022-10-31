@@ -1,0 +1,6 @@
+.node*
+.nyc_output
+dist
+node_modules
+out
+coverage

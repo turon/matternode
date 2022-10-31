@@ -1,0 +1,46 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+        {
+			// Debug mocha tests from Visual Studio Code, simply:
+			// 1) Open tab of file to test.
+			// 2) Set a breakpoint in the test.
+			// 3) Press F5 or Run->Start Debugging.
+            "name": "Run mocha",
+            "type": "node",
+            "request": "launch",
+            "stopOnEntry": false,
+			"preLaunchTask": "tsc: build - tsconfig.json",
+            "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+			"args": [
+				"-r",
+				"@swc-node/register",
+				"--no-timeout",
+				"--colors",
+				"${workspaceRoot}/dist/${relativeFile}",
+			],
+            "cwd": "${workspaceRoot}",
+			"console": "integratedTerminal",
+            "env": { "NODE_ENV": "testing"}
+        },
+		{
+			"name": "Run app.js",
+			"type": "node",
+            "request": "launch",
+            "stopOnEntry": false,
+			"preLaunchTask": "tsc: build - tsconfig.json",
+			"runtimeArgs": [
+				"-r",
+				"@swc-node/register",
+			],
+			"args": [
+				"${workspaceRoot}/dist/app.js",
+				"1", // Node number
+			],
+            "cwd": "${workspaceRoot}",
+			"console": "integratedTerminal",
+            "env": { "NODE_ENV": "testing"}
+		},
+
+	]
+}

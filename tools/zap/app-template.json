@@ -1,0 +1,63 @@
+{
+    "name": "Matter Node templates",
+    "version": "matternode-v1.0",
+    "helpers": [
+        "partials/helper.js",
+        "common/ListHelper.js",
+        "common/StringHelper.js",
+        "common/ChipTypesHelper.js",
+        "templates/app/helper.js",
+        "templates/chip/helper.js"
+    ],
+    "override": "common/override.js",
+    "partials": [
+        {
+            "name": "header",
+            "path": "partials/header.zapt"
+        },
+        {
+            "name": "clusters_header",
+            "path": "partials/clusters_header.zapt"
+        },
+        {
+            "name": "cluster_header",
+            "path": "partials/cluster_header.zapt"
+        },
+        {
+            "name": "im_command_handler_cluster_commands",
+            "path": "partials/im_command_handler_cluster_commands.zapt"
+        },
+        {
+            "name": "idl_structure_definition",
+            "path": "partials/idl/structure_definition.zapt"
+        },
+        {
+            "name": "idl_structure_member",
+            "path": "partials/idl/structure_member.zapt"
+        },
+        {
+            "name": "idl_command_request_response",
+            "path": "partials/idl/command_request_response.zapt"
+        },
+        {
+            "name": "idl_command_request_struct",
+            "path": "partials/idl/command_request_struct.zapt"
+        },
+        {
+            "name": "idl_command_response_struct",
+            "path": "partials/idl/command_response_struct.zapt"
+        }
+    ],
+    "templates": [
+        {
+            "path": "autogen/ClusterClass.zapt",
+            "name": "ClusterClass handler",
+            "output": "Clusters.js"
+        },
+        {
+            "path": "autogen/EndpointList.zapt",
+            "name": "Endpoint enumeration",
+            "output": "Endpoints.json"
+        }
+     ]
+}

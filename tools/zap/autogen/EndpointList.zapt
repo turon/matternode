@@ -1,0 +1,17 @@
+{
+{{#user_endpoints}}
+    "{{endpointId}}" : {
+	  {{#user_clusters}}
+	    {{#if (is_enabled enabled)}}
+	    "{{code}}": "Cluster{{asUpperCamelCase name}}{{asUpperCamelCase side}}",
+	    {{/if}}
+      {{#last}}
+	    "{{code}}": "Cluster{{asUpperCamelCase name}}{{asUpperCamelCase side}}"
+      {{/last}}
+	  {{/user_clusters}}
+    },
+{{#last}}
+    "": {}
+{{/last}}
+{{/user_endpoints}}
+}
