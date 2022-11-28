@@ -74,8 +74,8 @@
 	    "1293": "ClusterApplicationBasicServer",
 	    "1294": "ClusterAccountLoginServer",
 	    "2820": "ClusterElectricalMeasurementServer",
-	    "4294048773": "ClusterTestClusterServer",
-	    "4294048773": "ClusterTestClusterServer"
+	    "4294048773": "ClusterUnitTestingServer",
+	    "4294048773": "ClusterUnitTestingServer"
     },
     "2" : {
 	    "4": "ClusterGroupsServer",

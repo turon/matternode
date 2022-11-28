@@ -52,6 +52,10 @@ class ClusterIdentifyServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandIdentify = TlvObject({
+        identifyTime: TlvField(0,TlvUInt16),
+    })
+
     static TemplateCommandIdentify = function(params) {
         return [
           { 'tag': 0, 'type': 'uint16_t', 'value': params.IdentifyTime },
@@ -61,6 +65,11 @@ class ClusterIdentifyServer
     static MapCommandIdentify = new Map([
         [0, 'identifyTime'],
     ])
+
+    static SchemaCommandTriggerEffect = TlvObject({
+        effectIdentifier: TlvField(0,TlvUInt8),
+        effectVariant: TlvField(1,TlvUInt8),
+    })
 
     static TemplateCommandTriggerEffect = function(params) {
         return [
@@ -211,6 +220,11 @@ class ClusterGroupsServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandAddGroup = TlvObject({
+        groupId: TlvField(0,TlvUInt16),
+        groupName: TlvField(1,TlvString),
+    })
+
     static TemplateCommandAddGroup = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::GroupId', 'value': params.GroupId },
@@ -222,6 +236,11 @@ class ClusterGroupsServer
         [0, 'groupId'],
         [1, 'groupName'],
     ])
+
+    static SchemaCommandAddGroupResponse = TlvObject({
+        status: TlvField(0,TlvUInt8),
+        groupId: TlvField(1,TlvUInt16),
+    })
 
     static TemplateCommandAddGroupResponse = function(params) {
         return [
@@ -235,6 +254,10 @@ class ClusterGroupsServer
         [1, 'groupId'],
     ])
 
+    static SchemaCommandViewGroup = TlvObject({
+        groupId: TlvField(0,TlvUInt16),
+    })
+
     static TemplateCommandViewGroup = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::GroupId', 'value': params.GroupId },
@@ -244,6 +267,12 @@ class ClusterGroupsServer
     static MapCommandViewGroup = new Map([
         [0, 'groupId'],
     ])
+
+    static SchemaCommandViewGroupResponse = TlvObject({
+        status: TlvField(0,TlvUInt8),
+        groupId: TlvField(1,TlvUInt16),
+        groupName: TlvField(2,TlvString),
+    })
 
     static TemplateCommandViewGroupResponse = function(params) {
         return [
@@ -259,6 +288,10 @@ class ClusterGroupsServer
         [2, 'groupName'],
     ])
 
+    static SchemaCommandGetGroupMembership = TlvObject({
+        groupList: TlvField(0,TlvArray),
+    })
+
     static TemplateCommandGetGroupMembership = function(params) {
         return [
           { 'tag': 0, 'type': 'array', 'value': [] }, // params.GroupList
@@ -268,6 +301,11 @@ class ClusterGroupsServer
     static MapCommandGetGroupMembership = new Map([
         [0, 'groupList'],
     ])
+
+    static SchemaCommandGetGroupMembershipResponse = TlvObject({
+        capacity: TlvField(0,TlvUInt8),
+        groupList: TlvField(1,TlvArray),
+    })
 
     static TemplateCommandGetGroupMembershipResponse = function(params) {
         return [
@@ -281,6 +319,10 @@ class ClusterGroupsServer
         [1, 'groupList'],
     ])
 
+    static SchemaCommandRemoveGroup = TlvObject({
+        groupId: TlvField(0,TlvUInt16),
+    })
+
     static TemplateCommandRemoveGroup = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::GroupId', 'value': params.GroupId },
@@ -290,6 +332,11 @@ class ClusterGroupsServer
     static MapCommandRemoveGroup = new Map([
         [0, 'groupId'],
     ])
+
+    static SchemaCommandRemoveGroupResponse = TlvObject({
+        status: TlvField(0,TlvUInt8),
+        groupId: TlvField(1,TlvUInt16),
+    })
 
     static TemplateCommandRemoveGroupResponse = function(params) {
         return [
@@ -303,6 +350,9 @@ class ClusterGroupsServer
         [1, 'groupId'],
     ])
 
+    static SchemaCommandRemoveAllGroups = TlvObject({
+    })
+
     static TemplateCommandRemoveAllGroups = function(params) {
         return [
         ]
@@ -310,6 +360,11 @@ class ClusterGroupsServer
 
     static MapCommandRemoveAllGroups = new Map([
     ])
+
+    static SchemaCommandAddGroupIfIdentifying = TlvObject({
+        groupId: TlvField(0,TlvUInt16),
+        groupName: TlvField(1,TlvString),
+    })
 
     static TemplateCommandAddGroupIfIdentifying = function(params) {
         return [
@@ -523,6 +578,14 @@ class ClusterScenesServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandAddScene = TlvObject({
+        groupId: TlvField(0,TlvUInt16),
+        sceneId: TlvField(1,TlvUInt8),
+        transitionTime: TlvField(2,TlvUInt16),
+        sceneName: TlvField(3,TlvString),
+        extensionFieldSets: TlvField(4,TlvArray),
+    })
+
     static TemplateCommandAddScene = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::GroupId', 'value': params.GroupId },
@@ -541,6 +604,12 @@ class ClusterScenesServer
         [4, 'extensionFieldSets'],
     ])
 
+    static SchemaCommandAddSceneResponse = TlvObject({
+        status: TlvField(0,TlvUInt8),
+        groupId: TlvField(1,TlvUInt16),
+        sceneId: TlvField(2,TlvUInt8),
+    })
+
     static TemplateCommandAddSceneResponse = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.Status },
@@ -555,6 +624,11 @@ class ClusterScenesServer
         [2, 'sceneId'],
     ])
 
+    static SchemaCommandViewScene = TlvObject({
+        groupId: TlvField(0,TlvUInt16),
+        sceneId: TlvField(1,TlvUInt8),
+    })
+
     static TemplateCommandViewScene = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::GroupId', 'value': params.GroupId },
@@ -566,6 +640,15 @@ class ClusterScenesServer
         [0, 'groupId'],
         [1, 'sceneId'],
     ])
+
+    static SchemaCommandViewSceneResponse = TlvObject({
+        status: TlvField(0,TlvUInt8),
+        groupId: TlvField(1,TlvUInt16),
+        sceneId: TlvField(2,TlvUInt8),
+        transitionTime: TlvField(3,TlvUInt16),
+        sceneName: TlvField(4,TlvString),
+        extensionFieldSets: TlvField(5,TlvArray),
+    })
 
     static TemplateCommandViewSceneResponse = function(params) {
         return [
@@ -587,6 +670,11 @@ class ClusterScenesServer
         [5, 'extensionFieldSets'],
     ])
 
+    static SchemaCommandRemoveScene = TlvObject({
+        groupId: TlvField(0,TlvUInt16),
+        sceneId: TlvField(1,TlvUInt8),
+    })
+
     static TemplateCommandRemoveScene = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::GroupId', 'value': params.GroupId },
@@ -598,6 +686,12 @@ class ClusterScenesServer
         [0, 'groupId'],
         [1, 'sceneId'],
     ])
+
+    static SchemaCommandRemoveSceneResponse = TlvObject({
+        status: TlvField(0,TlvUInt8),
+        groupId: TlvField(1,TlvUInt16),
+        sceneId: TlvField(2,TlvUInt8),
+    })
 
     static TemplateCommandRemoveSceneResponse = function(params) {
         return [
@@ -613,6 +707,10 @@ class ClusterScenesServer
         [2, 'sceneId'],
     ])
 
+    static SchemaCommandRemoveAllScenes = TlvObject({
+        groupId: TlvField(0,TlvUInt16),
+    })
+
     static TemplateCommandRemoveAllScenes = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::GroupId', 'value': params.GroupId },
@@ -622,6 +720,11 @@ class ClusterScenesServer
     static MapCommandRemoveAllScenes = new Map([
         [0, 'groupId'],
     ])
+
+    static SchemaCommandRemoveAllScenesResponse = TlvObject({
+        status: TlvField(0,TlvUInt8),
+        groupId: TlvField(1,TlvUInt16),
+    })
 
     static TemplateCommandRemoveAllScenesResponse = function(params) {
         return [
@@ -635,6 +738,11 @@ class ClusterScenesServer
         [1, 'groupId'],
     ])
 
+    static SchemaCommandStoreScene = TlvObject({
+        groupId: TlvField(0,TlvUInt16),
+        sceneId: TlvField(1,TlvUInt8),
+    })
+
     static TemplateCommandStoreScene = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::GroupId', 'value': params.GroupId },
@@ -646,6 +754,12 @@ class ClusterScenesServer
         [0, 'groupId'],
         [1, 'sceneId'],
     ])
+
+    static SchemaCommandStoreSceneResponse = TlvObject({
+        status: TlvField(0,TlvUInt8),
+        groupId: TlvField(1,TlvUInt16),
+        sceneId: TlvField(2,TlvUInt8),
+    })
 
     static TemplateCommandStoreSceneResponse = function(params) {
         return [
@@ -661,6 +775,12 @@ class ClusterScenesServer
         [2, 'sceneId'],
     ])
 
+    static SchemaCommandRecallScene = TlvObject({
+        groupId: TlvField(0,TlvUInt16),
+        sceneId: TlvField(1,TlvUInt8),
+        transitionTime: TlvField(2,TlvUInt16),
+    })
+
     static TemplateCommandRecallScene = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::GroupId', 'value': params.GroupId },
@@ -675,6 +795,10 @@ class ClusterScenesServer
         [2, 'transitionTime'],
     ])
 
+    static SchemaCommandGetSceneMembership = TlvObject({
+        groupId: TlvField(0,TlvUInt16),
+    })
+
     static TemplateCommandGetSceneMembership = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::GroupId', 'value': params.GroupId },
@@ -684,6 +808,13 @@ class ClusterScenesServer
     static MapCommandGetSceneMembership = new Map([
         [0, 'groupId'],
     ])
+
+    static SchemaCommandGetSceneMembershipResponse = TlvObject({
+        status: TlvField(0,TlvUInt8),
+        capacity: TlvField(1,TlvUInt8),
+        groupId: TlvField(2,TlvUInt16),
+        sceneList: TlvField(3,TlvArray),
+    })
 
     static TemplateCommandGetSceneMembershipResponse = function(params) {
         return [
@@ -700,6 +831,14 @@ class ClusterScenesServer
         [2, 'groupId'],
         [3, 'sceneList'],
     ])
+
+    static SchemaCommandEnhancedAddScene = TlvObject({
+        groupId: TlvField(0,TlvUInt16),
+        sceneId: TlvField(1,TlvUInt8),
+        transitionTime: TlvField(2,TlvUInt16),
+        sceneName: TlvField(3,TlvString),
+        extensionFieldSets: TlvField(4,TlvArray),
+    })
 
     static TemplateCommandEnhancedAddScene = function(params) {
         return [
@@ -719,6 +858,12 @@ class ClusterScenesServer
         [4, 'extensionFieldSets'],
     ])
 
+    static SchemaCommandEnhancedAddSceneResponse = TlvObject({
+        status: TlvField(0,TlvUInt8),
+        groupId: TlvField(1,TlvUInt16),
+        sceneId: TlvField(2,TlvUInt8),
+    })
+
     static TemplateCommandEnhancedAddSceneResponse = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.Status },
@@ -733,6 +878,11 @@ class ClusterScenesServer
         [2, 'sceneId'],
     ])
 
+    static SchemaCommandEnhancedViewScene = TlvObject({
+        groupId: TlvField(0,TlvUInt16),
+        sceneId: TlvField(1,TlvUInt8),
+    })
+
     static TemplateCommandEnhancedViewScene = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::GroupId', 'value': params.GroupId },
@@ -744,6 +894,15 @@ class ClusterScenesServer
         [0, 'groupId'],
         [1, 'sceneId'],
     ])
+
+    static SchemaCommandEnhancedViewSceneResponse = TlvObject({
+        status: TlvField(0,TlvUInt8),
+        groupId: TlvField(1,TlvUInt16),
+        sceneId: TlvField(2,TlvUInt8),
+        transitionTime: TlvField(3,TlvUInt16),
+        sceneName: TlvField(4,TlvString),
+        extensionFieldSets: TlvField(5,TlvArray),
+    })
 
     static TemplateCommandEnhancedViewSceneResponse = function(params) {
         return [
@@ -765,6 +924,14 @@ class ClusterScenesServer
         [5, 'extensionFieldSets'],
     ])
 
+    static SchemaCommandCopyScene = TlvObject({
+        mode: TlvField(0,TlvUInt8),
+        groupIdFrom: TlvField(1,TlvUInt16),
+        sceneIdFrom: TlvField(2,TlvUInt8),
+        groupIdTo: TlvField(3,TlvUInt16),
+        sceneIdTo: TlvField(4,TlvUInt8),
+    })
+
     static TemplateCommandCopyScene = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.Mode },
@@ -782,6 +949,12 @@ class ClusterScenesServer
         [3, 'groupIdTo'],
         [4, 'sceneIdTo'],
     ])
+
+    static SchemaCommandCopySceneResponse = TlvObject({
+        status: TlvField(0,TlvUInt8),
+        groupIdFrom: TlvField(1,TlvUInt16),
+        sceneIdFrom: TlvField(2,TlvUInt8),
+    })
 
     static TemplateCommandCopySceneResponse = function(params) {
         return [
@@ -1081,6 +1254,9 @@ class ClusterOnOffServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandOff = TlvObject({
+    })
+
     static TemplateCommandOff = function(params) {
         return [
         ]
@@ -1088,6 +1264,9 @@ class ClusterOnOffServer
 
     static MapCommandOff = new Map([
     ])
+
+    static SchemaCommandOn = TlvObject({
+    })
 
     static TemplateCommandOn = function(params) {
         return [
@@ -1097,6 +1276,9 @@ class ClusterOnOffServer
     static MapCommandOn = new Map([
     ])
 
+    static SchemaCommandToggle = TlvObject({
+    })
+
     static TemplateCommandToggle = function(params) {
         return [
         ]
@@ -1104,6 +1286,11 @@ class ClusterOnOffServer
 
     static MapCommandToggle = new Map([
     ])
+
+    static SchemaCommandOffWithEffect = TlvObject({
+        effectId: TlvField(0,TlvUInt8),
+        effectVariant: TlvField(1,TlvUInt8),
+    })
 
     static TemplateCommandOffWithEffect = function(params) {
         return [
@@ -1117,6 +1304,9 @@ class ClusterOnOffServer
         [1, 'effectVariant'],
     ])
 
+    static SchemaCommandOnWithRecallGlobalScene = TlvObject({
+    })
+
     static TemplateCommandOnWithRecallGlobalScene = function(params) {
         return [
         ]
@@ -1124,6 +1314,12 @@ class ClusterOnOffServer
 
     static MapCommandOnWithRecallGlobalScene = new Map([
     ])
+
+    static SchemaCommandOnWithTimedOff = TlvObject({
+        onOffControl: TlvField(0,TlvUInt8),
+        onTime: TlvField(1,TlvUInt16),
+        offWaitTime: TlvField(2,TlvUInt16),
+    })
 
     static TemplateCommandOnWithTimedOff = function(params) {
         return [
@@ -1290,7 +1486,7 @@ class ClusterOnOffServer
  */
 class ClusterOnOffSwitchConfiguration
 {
-    static CLUSTER_NAME = 'ON_OFF_SWITCH_CONFIG_CLUSTER'
+    static CLUSTER_NAME = 'ON_OFF_SWITCH_CONFIGURATION_CLUSTER'
     static CLUSTER_ID = 0x0007
 
     static Command = {
@@ -1451,6 +1647,13 @@ class ClusterLevelControlServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandMoveToLevel = TlvObject({
+        level: TlvField(0,TlvUInt8),
+        transitionTime: TlvField(1,TlvUInt16),
+        optionsMask: TlvField(2,TlvUInt8),
+        optionsOverride: TlvField(3,TlvUInt8),
+    })
+
     static TemplateCommandMoveToLevel = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.Level },
@@ -1467,6 +1670,13 @@ class ClusterLevelControlServer
         [3, 'optionsOverride'],
     ])
 
+    static SchemaCommandMove = TlvObject({
+        moveMode: TlvField(0,TlvUInt8),
+        rate: TlvField(1,TlvUInt8),
+        optionsMask: TlvField(2,TlvUInt8),
+        optionsOverride: TlvField(3,TlvUInt8),
+    })
+
     static TemplateCommandMove = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.MoveMode },
@@ -1482,6 +1692,14 @@ class ClusterLevelControlServer
         [2, 'optionsMask'],
         [3, 'optionsOverride'],
     ])
+
+    static SchemaCommandStep = TlvObject({
+        stepMode: TlvField(0,TlvUInt8),
+        stepSize: TlvField(1,TlvUInt8),
+        transitionTime: TlvField(2,TlvUInt16),
+        optionsMask: TlvField(3,TlvUInt8),
+        optionsOverride: TlvField(4,TlvUInt8),
+    })
 
     static TemplateCommandStep = function(params) {
         return [
@@ -1501,6 +1719,11 @@ class ClusterLevelControlServer
         [4, 'optionsOverride'],
     ])
 
+    static SchemaCommandStop = TlvObject({
+        optionsMask: TlvField(0,TlvUInt8),
+        optionsOverride: TlvField(1,TlvUInt8),
+    })
+
     static TemplateCommandStop = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.OptionsMask },
@@ -1512,6 +1735,13 @@ class ClusterLevelControlServer
         [0, 'optionsMask'],
         [1, 'optionsOverride'],
     ])
+
+    static SchemaCommandMoveToLevelWithOnOff = TlvObject({
+        level: TlvField(0,TlvUInt8),
+        transitionTime: TlvField(1,TlvUInt16),
+        optionsMask: TlvField(2,TlvUInt8),
+        optionsOverride: TlvField(3,TlvUInt8),
+    })
 
     static TemplateCommandMoveToLevelWithOnOff = function(params) {
         return [
@@ -1529,6 +1759,13 @@ class ClusterLevelControlServer
         [3, 'optionsOverride'],
     ])
 
+    static SchemaCommandMoveWithOnOff = TlvObject({
+        moveMode: TlvField(0,TlvUInt8),
+        rate: TlvField(1,TlvUInt8),
+        optionsMask: TlvField(2,TlvUInt8),
+        optionsOverride: TlvField(3,TlvUInt8),
+    })
+
     static TemplateCommandMoveWithOnOff = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.MoveMode },
@@ -1544,6 +1781,14 @@ class ClusterLevelControlServer
         [2, 'optionsMask'],
         [3, 'optionsOverride'],
     ])
+
+    static SchemaCommandStepWithOnOff = TlvObject({
+        stepMode: TlvField(0,TlvUInt8),
+        stepSize: TlvField(1,TlvUInt8),
+        transitionTime: TlvField(2,TlvUInt16),
+        optionsMask: TlvField(3,TlvUInt8),
+        optionsOverride: TlvField(4,TlvUInt8),
+    })
 
     static TemplateCommandStepWithOnOff = function(params) {
         return [
@@ -1563,6 +1808,11 @@ class ClusterLevelControlServer
         [4, 'optionsOverride'],
     ])
 
+    static SchemaCommandStopWithOnOff = TlvObject({
+        optionsMask: TlvField(0,TlvUInt8),
+        optionsOverride: TlvField(1,TlvUInt8),
+    })
+
     static TemplateCommandStopWithOnOff = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.OptionsMask },
@@ -1574,6 +1824,10 @@ class ClusterLevelControlServer
         [0, 'optionsMask'],
         [1, 'optionsOverride'],
     ])
+
+    static SchemaCommandMoveToClosestFrequency = TlvObject({
+        frequency: TlvField(0,TlvUInt16),
+    })
 
     static TemplateCommandMoveToClosestFrequency = function(params) {
         return [
@@ -1646,7 +1900,7 @@ class ClusterLevelControlServer
             },
             15: { // ClusterLevelControlServer.Attribute.Options
                 "name": "Options",
-                "type": "bitmap8",
+                "type": "LevelControlOptions",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
@@ -2403,6 +2657,11 @@ class ClusterActionsServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandInstantAction = TlvObject({
+        actionID: TlvField(0,TlvUInt16),
+        invokeID: TlvField(1,TlvUInt32),
+    })
+
     static TemplateCommandInstantAction = function(params) {
         return [
           { 'tag': 0, 'type': 'uint16_t', 'value': params.ActionID },
@@ -2414,6 +2673,12 @@ class ClusterActionsServer
         [0, 'actionID'],
         [1, 'invokeID'],
     ])
+
+    static SchemaCommandInstantActionWithTransition = TlvObject({
+        actionID: TlvField(0,TlvUInt16),
+        invokeID: TlvField(1,TlvUInt32),
+        transitionTime: TlvField(2,TlvUInt16),
+    })
 
     static TemplateCommandInstantActionWithTransition = function(params) {
         return [
@@ -2429,6 +2694,11 @@ class ClusterActionsServer
         [2, 'transitionTime'],
     ])
 
+    static SchemaCommandStartAction = TlvObject({
+        actionID: TlvField(0,TlvUInt16),
+        invokeID: TlvField(1,TlvUInt32),
+    })
+
     static TemplateCommandStartAction = function(params) {
         return [
           { 'tag': 0, 'type': 'uint16_t', 'value': params.ActionID },
@@ -2440,6 +2710,12 @@ class ClusterActionsServer
         [0, 'actionID'],
         [1, 'invokeID'],
     ])
+
+    static SchemaCommandStartActionWithDuration = TlvObject({
+        actionID: TlvField(0,TlvUInt16),
+        invokeID: TlvField(1,TlvUInt32),
+        duration: TlvField(2,TlvUInt32),
+    })
 
     static TemplateCommandStartActionWithDuration = function(params) {
         return [
@@ -2455,6 +2731,11 @@ class ClusterActionsServer
         [2, 'duration'],
     ])
 
+    static SchemaCommandStopAction = TlvObject({
+        actionID: TlvField(0,TlvUInt16),
+        invokeID: TlvField(1,TlvUInt32),
+    })
+
     static TemplateCommandStopAction = function(params) {
         return [
           { 'tag': 0, 'type': 'uint16_t', 'value': params.ActionID },
@@ -2467,6 +2748,11 @@ class ClusterActionsServer
         [1, 'invokeID'],
     ])
 
+    static SchemaCommandPauseAction = TlvObject({
+        actionID: TlvField(0,TlvUInt16),
+        invokeID: TlvField(1,TlvUInt32),
+    })
+
     static TemplateCommandPauseAction = function(params) {
         return [
           { 'tag': 0, 'type': 'uint16_t', 'value': params.ActionID },
@@ -2478,6 +2764,12 @@ class ClusterActionsServer
         [0, 'actionID'],
         [1, 'invokeID'],
     ])
+
+    static SchemaCommandPauseActionWithDuration = TlvObject({
+        actionID: TlvField(0,TlvUInt16),
+        invokeID: TlvField(1,TlvUInt32),
+        duration: TlvField(2,TlvUInt32),
+    })
 
     static TemplateCommandPauseActionWithDuration = function(params) {
         return [
@@ -2493,6 +2785,11 @@ class ClusterActionsServer
         [2, 'duration'],
     ])
 
+    static SchemaCommandResumeAction = TlvObject({
+        actionID: TlvField(0,TlvUInt16),
+        invokeID: TlvField(1,TlvUInt32),
+    })
+
     static TemplateCommandResumeAction = function(params) {
         return [
           { 'tag': 0, 'type': 'uint16_t', 'value': params.ActionID },
@@ -2505,6 +2802,11 @@ class ClusterActionsServer
         [1, 'invokeID'],
     ])
 
+    static SchemaCommandEnableAction = TlvObject({
+        actionID: TlvField(0,TlvUInt16),
+        invokeID: TlvField(1,TlvUInt32),
+    })
+
     static TemplateCommandEnableAction = function(params) {
         return [
           { 'tag': 0, 'type': 'uint16_t', 'value': params.ActionID },
@@ -2516,6 +2818,12 @@ class ClusterActionsServer
         [0, 'actionID'],
         [1, 'invokeID'],
     ])
+
+    static SchemaCommandEnableActionWithDuration = TlvObject({
+        actionID: TlvField(0,TlvUInt16),
+        invokeID: TlvField(1,TlvUInt32),
+        duration: TlvField(2,TlvUInt32),
+    })
 
     static TemplateCommandEnableActionWithDuration = function(params) {
         return [
@@ -2531,6 +2839,11 @@ class ClusterActionsServer
         [2, 'duration'],
     ])
 
+    static SchemaCommandDisableAction = TlvObject({
+        actionID: TlvField(0,TlvUInt16),
+        invokeID: TlvField(1,TlvUInt32),
+    })
+
     static TemplateCommandDisableAction = function(params) {
         return [
           { 'tag': 0, 'type': 'uint16_t', 'value': params.ActionID },
@@ -2542,6 +2855,12 @@ class ClusterActionsServer
         [0, 'actionID'],
         [1, 'invokeID'],
     ])
+
+    static SchemaCommandDisableActionWithDuration = TlvObject({
+        actionID: TlvField(0,TlvUInt16),
+        invokeID: TlvField(1,TlvUInt32),
+        duration: TlvField(2,TlvUInt32),
+    })
 
     static TemplateCommandDisableActionWithDuration = function(params) {
         return [
@@ -2781,6 +3100,9 @@ class ClusterBasicServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandMfgSpecificPing = TlvObject({
+    })
+
     static TemplateCommandMfgSpecificPing = function(params) {
         return [
         ]
@@ -3010,7 +3332,7 @@ class ClusterBasicServer
  */
 class ClusterOtaSoftwareUpdateProvider
 {
-    static CLUSTER_NAME = 'OTA_PROVIDER_CLUSTER'
+    static CLUSTER_NAME = 'OTA_SOFTWARE_UPDATE_PROVIDER_CLUSTER'
     static CLUSTER_ID = 0x0029
 
     static Command = {
@@ -3039,6 +3361,17 @@ class ClusterOtaSoftwareUpdateProviderClient
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandQueryImage = TlvObject({
+        vendorId: TlvField(0,TlvUInt16),
+        productId: TlvField(1,TlvUInt16),
+        softwareVersion: TlvField(2,TlvUInt32),
+        protocolsSupported: TlvField(3,TlvArray),
+        hardwareVersion: TlvField(4,TlvUInt16),
+        location: TlvField(5,TlvString),
+        requestorCanConsent: TlvField(6,Tlvbool),
+        metadataForProvider: TlvField(7,TlvByteString),
+    })
+
     static TemplateCommandQueryImage = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::VendorId', 'value': params.VendorId },
@@ -3062,6 +3395,17 @@ class ClusterOtaSoftwareUpdateProviderClient
         [6, 'requestorCanConsent'],
         [7, 'metadataForProvider'],
     ])
+
+    static SchemaCommandQueryImageResponse = TlvObject({
+        status: TlvField(0,TlvUInt8),
+        delayedActionTime: TlvField(1,TlvUInt32),
+        imageURI: TlvField(2,TlvString),
+        softwareVersion: TlvField(3,TlvUInt32),
+        softwareVersionString: TlvField(4,TlvString),
+        updateToken: TlvField(5,TlvByteString),
+        userConsentNeeded: TlvField(6,Tlvbool),
+        metadataForRequestor: TlvField(7,TlvByteString),
+    })
 
     static TemplateCommandQueryImageResponse = function(params) {
         return [
@@ -3087,6 +3431,11 @@ class ClusterOtaSoftwareUpdateProviderClient
         [7, 'metadataForRequestor'],
     ])
 
+    static SchemaCommandApplyUpdateRequest = TlvObject({
+        updateToken: TlvField(0,TlvByteString),
+        newVersion: TlvField(1,TlvUInt32),
+    })
+
     static TemplateCommandApplyUpdateRequest = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::ByteSpan', 'value': params.UpdateToken },
@@ -3099,6 +3448,11 @@ class ClusterOtaSoftwareUpdateProviderClient
         [1, 'newVersion'],
     ])
 
+    static SchemaCommandApplyUpdateResponse = TlvObject({
+        action: TlvField(0,TlvUInt8),
+        delayedActionTime: TlvField(1,TlvUInt32),
+    })
+
     static TemplateCommandApplyUpdateResponse = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.Action },
@@ -3110,6 +3464,11 @@ class ClusterOtaSoftwareUpdateProviderClient
         [0, 'action'],
         [1, 'delayedActionTime'],
     ])
+
+    static SchemaCommandNotifyUpdateApplied = TlvObject({
+        updateToken: TlvField(0,TlvByteString),
+        softwareVersion: TlvField(1,TlvUInt32),
+    })
 
     static TemplateCommandNotifyUpdateApplied = function(params) {
         return [
@@ -3232,7 +3591,7 @@ class ClusterOtaSoftwareUpdateProviderClient
  */
 class ClusterOtaSoftwareUpdateRequestor
 {
-    static CLUSTER_NAME = 'OTA_REQUESTOR_CLUSTER'
+    static CLUSTER_NAME = 'OTA_SOFTWARE_UPDATE_REQUESTOR_CLUSTER'
     static CLUSTER_ID = 0x002A
 
     static Command = {
@@ -3261,6 +3620,14 @@ class ClusterOtaSoftwareUpdateRequestorServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandAnnounceOtaProvider = TlvObject({
+        providerNodeId: TlvField(0,TlvUInt64),
+        vendorId: TlvField(1,TlvUInt16),
+        announcementReason: TlvField(2,TlvUInt8),
+        metadataForNode: TlvField(3,TlvByteString),
+        endpoint: TlvField(4,TlvUInt16),
+    })
+
     static TemplateCommandAnnounceOtaProvider = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::NodeId', 'value': params.ProviderNodeId },
@@ -4217,6 +4584,11 @@ class ClusterGeneralCommissioningServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandArmFailSafe = TlvObject({
+        expiryLengthSeconds: TlvField(0,TlvUInt16),
+        breadcrumb: TlvField(1,TlvUInt64),
+    })
+
     static TemplateCommandArmFailSafe = function(params) {
         return [
           { 'tag': 0, 'type': 'uint16_t', 'value': params.ExpiryLengthSeconds },
@@ -4229,6 +4601,11 @@ class ClusterGeneralCommissioningServer
         [1, 'breadcrumb'],
     ])
 
+    static SchemaCommandArmFailSafeResponse = TlvObject({
+        errorCode: TlvField(0,TlvUInt8),
+        debugText: TlvField(1,TlvString),
+    })
+
     static TemplateCommandArmFailSafeResponse = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.ErrorCode },
@@ -4240,6 +4617,12 @@ class ClusterGeneralCommissioningServer
         [0, 'errorCode'],
         [1, 'debugText'],
     ])
+
+    static SchemaCommandSetRegulatoryConfig = TlvObject({
+        newRegulatoryConfig: TlvField(0,TlvUInt8),
+        countryCode: TlvField(1,TlvString),
+        breadcrumb: TlvField(2,TlvUInt64),
+    })
 
     static TemplateCommandSetRegulatoryConfig = function(params) {
         return [
@@ -4255,6 +4638,11 @@ class ClusterGeneralCommissioningServer
         [2, 'breadcrumb'],
     ])
 
+    static SchemaCommandSetRegulatoryConfigResponse = TlvObject({
+        errorCode: TlvField(0,TlvUInt8),
+        debugText: TlvField(1,TlvString),
+    })
+
     static TemplateCommandSetRegulatoryConfigResponse = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.ErrorCode },
@@ -4267,6 +4655,9 @@ class ClusterGeneralCommissioningServer
         [1, 'debugText'],
     ])
 
+    static SchemaCommandCommissioningComplete = TlvObject({
+    })
+
     static TemplateCommandCommissioningComplete = function(params) {
         return [
         ]
@@ -4274,6 +4665,11 @@ class ClusterGeneralCommissioningServer
 
     static MapCommandCommissioningComplete = new Map([
     ])
+
+    static SchemaCommandCommissioningCompleteResponse = TlvObject({
+        errorCode: TlvField(0,TlvUInt8),
+        debugText: TlvField(1,TlvString),
+    })
 
     static TemplateCommandCommissioningCompleteResponse = function(params) {
         return [
@@ -4479,6 +4875,11 @@ class ClusterNetworkCommissioningServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandScanNetworks = TlvObject({
+        ssid: TlvField(0,TlvByteString),
+        breadcrumb: TlvField(1,TlvUInt64),
+    })
+
     static TemplateCommandScanNetworks = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::ByteSpan', 'value': params.Ssid },
@@ -4490,6 +4891,13 @@ class ClusterNetworkCommissioningServer
         [0, 'ssid'],
         [1, 'breadcrumb'],
     ])
+
+    static SchemaCommandScanNetworksResponse = TlvObject({
+        networkingStatus: TlvField(0,TlvUInt8),
+        debugText: TlvField(1,TlvString),
+        wiFiScanResults: TlvField(2,TlvArray),
+        threadScanResults: TlvField(3,TlvArray),
+    })
 
     static TemplateCommandScanNetworksResponse = function(params) {
         return [
@@ -4507,6 +4915,12 @@ class ClusterNetworkCommissioningServer
         [3, 'threadScanResults'],
     ])
 
+    static SchemaCommandAddOrUpdateWiFiNetwork = TlvObject({
+        ssid: TlvField(0,TlvByteString),
+        credentials: TlvField(1,TlvByteString),
+        breadcrumb: TlvField(2,TlvUInt64),
+    })
+
     static TemplateCommandAddOrUpdateWiFiNetwork = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::ByteSpan', 'value': params.Ssid },
@@ -4521,6 +4935,11 @@ class ClusterNetworkCommissioningServer
         [2, 'breadcrumb'],
     ])
 
+    static SchemaCommandAddOrUpdateThreadNetwork = TlvObject({
+        operationalDataset: TlvField(0,TlvByteString),
+        breadcrumb: TlvField(1,TlvUInt64),
+    })
+
     static TemplateCommandAddOrUpdateThreadNetwork = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::ByteSpan', 'value': params.OperationalDataset },
@@ -4533,6 +4952,11 @@ class ClusterNetworkCommissioningServer
         [1, 'breadcrumb'],
     ])
 
+    static SchemaCommandRemoveNetwork = TlvObject({
+        networkID: TlvField(0,TlvByteString),
+        breadcrumb: TlvField(1,TlvUInt64),
+    })
+
     static TemplateCommandRemoveNetwork = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::ByteSpan', 'value': params.NetworkID },
@@ -4544,6 +4968,12 @@ class ClusterNetworkCommissioningServer
         [0, 'networkID'],
         [1, 'breadcrumb'],
     ])
+
+    static SchemaCommandNetworkConfigResponse = TlvObject({
+        networkingStatus: TlvField(0,TlvUInt8),
+        debugText: TlvField(1,TlvString),
+        networkIndex: TlvField(2,TlvUInt8),
+    })
 
     static TemplateCommandNetworkConfigResponse = function(params) {
         return [
@@ -4559,6 +4989,11 @@ class ClusterNetworkCommissioningServer
         [2, 'networkIndex'],
     ])
 
+    static SchemaCommandConnectNetwork = TlvObject({
+        networkID: TlvField(0,TlvByteString),
+        breadcrumb: TlvField(1,TlvUInt64),
+    })
+
     static TemplateCommandConnectNetwork = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::ByteSpan', 'value': params.NetworkID },
@@ -4570,6 +5005,12 @@ class ClusterNetworkCommissioningServer
         [0, 'networkID'],
         [1, 'breadcrumb'],
     ])
+
+    static SchemaCommandConnectNetworkResponse = TlvObject({
+        networkingStatus: TlvField(0,TlvUInt8),
+        debugText: TlvField(1,TlvString),
+        errorValue: TlvField(2,TlvInt32_t),
+    })
 
     static TemplateCommandConnectNetworkResponse = function(params) {
         return [
@@ -4584,6 +5025,12 @@ class ClusterNetworkCommissioningServer
         [1, 'debugText'],
         [2, 'errorValue'],
     ])
+
+    static SchemaCommandReorderNetwork = TlvObject({
+        networkID: TlvField(0,TlvByteString),
+        networkIndex: TlvField(1,TlvUInt8),
+        breadcrumb: TlvField(2,TlvUInt64),
+    })
 
     static TemplateCommandReorderNetwork = function(params) {
         return [
@@ -4818,6 +5265,12 @@ class ClusterDiagnosticLogsServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandRetrieveLogsRequest = TlvObject({
+        intent: TlvField(0,TlvUInt8),
+        requestedProtocol: TlvField(1,TlvUInt8),
+        transferFileDesignator: TlvField(2,TlvByteString),
+    })
+
     static TemplateCommandRetrieveLogsRequest = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.Intent },
@@ -4831,6 +5284,13 @@ class ClusterDiagnosticLogsServer
         [1, 'requestedProtocol'],
         [2, 'transferFileDesignator'],
     ])
+
+    static SchemaCommandRetrieveLogsResponse = TlvObject({
+        status: TlvField(0,TlvUInt8),
+        content: TlvField(1,TlvByteString),
+        timeStamp: TlvField(2,TlvUInt32),
+        timeSinceBoot: TlvField(3,TlvUInt32),
+    })
 
     static TemplateCommandRetrieveLogsResponse = function(params) {
         return [
@@ -4970,6 +5430,11 @@ class ClusterGeneralDiagnosticsServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandTestEventTrigger = TlvObject({
+        enableKey: TlvField(0,TlvByteString),
+        eventTrigger: TlvField(1,TlvUInt64),
+    })
+
     static TemplateCommandTestEventTrigger = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::ByteSpan', 'value': params.EnableKey },
@@ -5155,6 +5620,9 @@ class ClusterSoftwareDiagnosticsServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandResetWatermarks = TlvObject({
+    })
+
     static TemplateCommandResetWatermarks = function(params) {
         return [
         ]
@@ -5360,6 +5828,9 @@ class ClusterThreadNetworkDiagnosticsServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandResetCounts = TlvObject({
+    })
+
     static TemplateCommandResetCounts = function(params) {
         return [
         ]
@@ -5928,6 +6399,9 @@ class ClusterWiFiNetworkDiagnosticsServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandResetCounts = TlvObject({
+    })
+
     static TemplateCommandResetCounts = function(params) {
         return [
         ]
@@ -6142,6 +6616,9 @@ class ClusterEthernetNetworkDiagnosticsServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandResetCounts = TlvObject({
+    })
+
     static TemplateCommandResetCounts = function(params) {
         return [
         ]
@@ -6446,6 +6923,14 @@ class ClusterAdministratorCommissioningServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandOpenCommissioningWindow = TlvObject({
+        commissioningTimeout: TlvField(0,TlvUInt16),
+        PAKEVerifier: TlvField(1,TlvByteString),
+        discriminator: TlvField(2,TlvUInt16),
+        iterations: TlvField(3,TlvUInt32),
+        salt: TlvField(4,TlvByteString),
+    })
+
     static TemplateCommandOpenCommissioningWindow = function(params) {
         return [
           { 'tag': 0, 'type': 'uint16_t', 'value': params.CommissioningTimeout },
@@ -6464,6 +6949,10 @@ class ClusterAdministratorCommissioningServer
         [4, 'salt'],
     ])
 
+    static SchemaCommandOpenBasicCommissioningWindow = TlvObject({
+        commissioningTimeout: TlvField(0,TlvUInt16),
+    })
+
     static TemplateCommandOpenBasicCommissioningWindow = function(params) {
         return [
           { 'tag': 0, 'type': 'uint16_t', 'value': params.CommissioningTimeout },
@@ -6473,6 +6962,9 @@ class ClusterAdministratorCommissioningServer
     static MapCommandOpenBasicCommissioningWindow = new Map([
         [0, 'commissioningTimeout'],
     ])
+
+    static SchemaCommandRevokeCommissioning = TlvObject({
+    })
 
     static TemplateCommandRevokeCommissioning = function(params) {
         return [
@@ -6640,6 +7132,10 @@ class ClusterOperationalCredentialsServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandAttestationRequest = TlvObject({
+        attestationNonce: TlvField(0,TlvByteString),
+    })
+
     static TemplateCommandAttestationRequest = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::ByteSpan', 'value': params.AttestationNonce },
@@ -6649,6 +7145,11 @@ class ClusterOperationalCredentialsServer
     static MapCommandAttestationRequest = new Map([
         [0, 'attestationNonce'],
     ])
+
+    static SchemaCommandAttestationResponse = TlvObject({
+        attestationElements: TlvField(0,TlvByteString),
+        signature: TlvField(1,TlvByteString),
+    })
 
     static TemplateCommandAttestationResponse = function(params) {
         return [
@@ -6662,6 +7163,10 @@ class ClusterOperationalCredentialsServer
         [1, 'signature'],
     ])
 
+    static SchemaCommandCertificateChainRequest = TlvObject({
+        certificateType: TlvField(0,TlvUInt8),
+    })
+
     static TemplateCommandCertificateChainRequest = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.CertificateType },
@@ -6672,6 +7177,10 @@ class ClusterOperationalCredentialsServer
         [0, 'certificateType'],
     ])
 
+    static SchemaCommandCertificateChainResponse = TlvObject({
+        certificate: TlvField(0,TlvByteString),
+    })
+
     static TemplateCommandCertificateChainResponse = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::ByteSpan', 'value': params.Certificate },
@@ -6681,6 +7190,11 @@ class ClusterOperationalCredentialsServer
     static MapCommandCertificateChainResponse = new Map([
         [0, 'certificate'],
     ])
+
+    static SchemaCommandCSRRequest = TlvObject({
+        CSRNonce: TlvField(0,TlvByteString),
+        isForUpdateNOC: TlvField(1,Tlvbool),
+    })
 
     static TemplateCommandCSRRequest = function(params) {
         return [
@@ -6694,6 +7208,11 @@ class ClusterOperationalCredentialsServer
         [1, 'isForUpdateNOC'],
     ])
 
+    static SchemaCommandCSRResponse = TlvObject({
+        NOCSRElements: TlvField(0,TlvByteString),
+        attestationSignature: TlvField(1,TlvByteString),
+    })
+
     static TemplateCommandCSRResponse = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::ByteSpan', 'value': params.NOCSRElements },
@@ -6705,6 +7224,14 @@ class ClusterOperationalCredentialsServer
         [0, 'NOCSRElements'],
         [1, 'attestationSignature'],
     ])
+
+    static SchemaCommandAddNOC = TlvObject({
+        NOCValue: TlvField(0,TlvByteString),
+        ICACValue: TlvField(1,TlvByteString),
+        IPKValue: TlvField(2,TlvByteString),
+        caseAdminSubject: TlvField(3,TlvUInt64),
+        adminVendorId: TlvField(4,TlvUInt16),
+    })
 
     static TemplateCommandAddNOC = function(params) {
         return [
@@ -6724,6 +7251,11 @@ class ClusterOperationalCredentialsServer
         [4, 'adminVendorId'],
     ])
 
+    static SchemaCommandUpdateNOC = TlvObject({
+        NOCValue: TlvField(0,TlvByteString),
+        ICACValue: TlvField(1,TlvByteString),
+    })
+
     static TemplateCommandUpdateNOC = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::ByteSpan', 'value': params.NOCValue },
@@ -6735,6 +7267,12 @@ class ClusterOperationalCredentialsServer
         [0, 'NOCValue'],
         [1, 'ICACValue'],
     ])
+
+    static SchemaCommandNOCResponse = TlvObject({
+        statusCode: TlvField(0,TlvUInt8),
+        fabricIndex: TlvField(1,TlvUInt64),
+        debugText: TlvField(2,TlvString),
+    })
 
     static TemplateCommandNOCResponse = function(params) {
         return [
@@ -6750,6 +7288,10 @@ class ClusterOperationalCredentialsServer
         [2, 'debugText'],
     ])
 
+    static SchemaCommandUpdateFabricLabel = TlvObject({
+        label: TlvField(0,TlvString),
+    })
+
     static TemplateCommandUpdateFabricLabel = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::CharSpan', 'value': params.Label },
@@ -6760,6 +7302,10 @@ class ClusterOperationalCredentialsServer
         [0, 'label'],
     ])
 
+    static SchemaCommandRemoveFabric = TlvObject({
+        fabricIndex: TlvField(0,TlvUInt64),
+    })
+
     static TemplateCommandRemoveFabric = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::FabricIndex', 'value': params.FabricIndex },
@@ -6769,6 +7315,10 @@ class ClusterOperationalCredentialsServer
     static MapCommandRemoveFabric = new Map([
         [0, 'fabricIndex'],
     ])
+
+    static SchemaCommandAddTrustedRootCertificate = TlvObject({
+        rootCertificate: TlvField(0,TlvByteString),
+    })
 
     static TemplateCommandAddTrustedRootCertificate = function(params) {
         return [
@@ -7014,6 +7564,10 @@ class ClusterGroupKeyManagementServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandKeySetWrite = TlvObject({
+        groupKeySet: TlvField(0,TlvObject),
+    })
+
     static TemplateCommandKeySetWrite = function(params) {
         return [
           { 'tag': 0, 'type': 'struct', 'value': [] }, // params.GroupKeySet
@@ -7023,6 +7577,10 @@ class ClusterGroupKeyManagementServer
     static MapCommandKeySetWrite = new Map([
         [0, 'groupKeySet'],
     ])
+
+    static SchemaCommandKeySetRead = TlvObject({
+        groupKeySetID: TlvField(0,TlvUInt16),
+    })
 
     static TemplateCommandKeySetRead = function(params) {
         return [
@@ -7034,6 +7592,10 @@ class ClusterGroupKeyManagementServer
         [0, 'groupKeySetID'],
     ])
 
+    static SchemaCommandKeySetReadResponse = TlvObject({
+        groupKeySet: TlvField(0,TlvObject),
+    })
+
     static TemplateCommandKeySetReadResponse = function(params) {
         return [
           { 'tag': 0, 'type': 'struct', 'value': [] }, // params.GroupKeySet
@@ -7043,6 +7605,10 @@ class ClusterGroupKeyManagementServer
     static MapCommandKeySetReadResponse = new Map([
         [0, 'groupKeySet'],
     ])
+
+    static SchemaCommandKeySetRemove = TlvObject({
+        groupKeySetID: TlvField(0,TlvUInt16),
+    })
 
     static TemplateCommandKeySetRemove = function(params) {
         return [
@@ -7054,6 +7620,10 @@ class ClusterGroupKeyManagementServer
         [0, 'groupKeySetID'],
     ])
 
+    static SchemaCommandKeySetReadAllIndices = TlvObject({
+        groupKeySetIDs: TlvField(0,TlvArray),
+    })
+
     static TemplateCommandKeySetReadAllIndices = function(params) {
         return [
           { 'tag': 0, 'type': 'array', 'value': [] }, // params.GroupKeySetIDs
@@ -7063,6 +7633,10 @@ class ClusterGroupKeyManagementServer
     static MapCommandKeySetReadAllIndices = new Map([
         [0, 'groupKeySetIDs'],
     ])
+
+    static SchemaCommandKeySetReadAllIndicesResponse = TlvObject({
+        groupKeySetIDs: TlvField(0,TlvArray),
+    })
 
     static TemplateCommandKeySetReadAllIndicesResponse = function(params) {
         return [
@@ -7567,6 +8141,10 @@ class ClusterModeSelectServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandChangeToMode = TlvObject({
+        newMode: TlvField(0,TlvUInt8),
+    })
+
     static TemplateCommandChangeToMode = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.NewMode },
@@ -7784,6 +8362,10 @@ class ClusterDoorLockServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandLockDoor = TlvObject({
+        pinCode: TlvField(0,TlvByteString),
+    })
+
     static TemplateCommandLockDoor = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::ByteSpan', 'value': params.PinCode },
@@ -7794,6 +8376,10 @@ class ClusterDoorLockServer
         [0, 'pinCode'],
     ])
 
+    static SchemaCommandUnlockDoor = TlvObject({
+        pinCode: TlvField(0,TlvByteString),
+    })
+
     static TemplateCommandUnlockDoor = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::ByteSpan', 'value': params.PinCode },
@@ -7803,6 +8389,11 @@ class ClusterDoorLockServer
     static MapCommandUnlockDoor = new Map([
         [0, 'pinCode'],
     ])
+
+    static SchemaCommandUnlockWithTimeout = TlvObject({
+        timeout: TlvField(0,TlvUInt16),
+        pinCode: TlvField(1,TlvByteString),
+    })
 
     static TemplateCommandUnlockWithTimeout = function(params) {
         return [
@@ -7815,6 +8406,16 @@ class ClusterDoorLockServer
         [0, 'timeout'],
         [1, 'pinCode'],
     ])
+
+    static SchemaCommandSetWeekDaySchedule = TlvObject({
+        weekDayIndex: TlvField(0,TlvUInt8),
+        userIndex: TlvField(1,TlvUInt16),
+        daysMask: TlvField(2,TlvUInt8),
+        startHour: TlvField(3,TlvUInt8),
+        startMinute: TlvField(4,TlvUInt8),
+        endHour: TlvField(5,TlvUInt8),
+        endMinute: TlvField(6,TlvUInt8),
+    })
 
     static TemplateCommandSetWeekDaySchedule = function(params) {
         return [
@@ -7838,6 +8439,11 @@ class ClusterDoorLockServer
         [6, 'endMinute'],
     ])
 
+    static SchemaCommandGetWeekDaySchedule = TlvObject({
+        weekDayIndex: TlvField(0,TlvUInt8),
+        userIndex: TlvField(1,TlvUInt16),
+    })
+
     static TemplateCommandGetWeekDaySchedule = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.WeekDayIndex },
@@ -7849,6 +8455,17 @@ class ClusterDoorLockServer
         [0, 'weekDayIndex'],
         [1, 'userIndex'],
     ])
+
+    static SchemaCommandGetWeekDayScheduleResponse = TlvObject({
+        weekDayIndex: TlvField(0,TlvUInt8),
+        userIndex: TlvField(1,TlvUInt16),
+        status: TlvField(2,TlvUInt8),
+        daysMask: TlvField(3,TlvUInt8),
+        startHour: TlvField(4,TlvUInt8),
+        startMinute: TlvField(5,TlvUInt8),
+        endHour: TlvField(6,TlvUInt8),
+        endMinute: TlvField(7,TlvUInt8),
+    })
 
     static TemplateCommandGetWeekDayScheduleResponse = function(params) {
         return [
@@ -7874,6 +8491,11 @@ class ClusterDoorLockServer
         [7, 'endMinute'],
     ])
 
+    static SchemaCommandClearWeekDaySchedule = TlvObject({
+        weekDayIndex: TlvField(0,TlvUInt8),
+        userIndex: TlvField(1,TlvUInt16),
+    })
+
     static TemplateCommandClearWeekDaySchedule = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.WeekDayIndex },
@@ -7885,6 +8507,13 @@ class ClusterDoorLockServer
         [0, 'weekDayIndex'],
         [1, 'userIndex'],
     ])
+
+    static SchemaCommandSetYearDaySchedule = TlvObject({
+        yearDayIndex: TlvField(0,TlvUInt8),
+        userIndex: TlvField(1,TlvUInt16),
+        localStartTime: TlvField(2,TlvUInt32),
+        localEndTime: TlvField(3,TlvUInt32),
+    })
 
     static TemplateCommandSetYearDaySchedule = function(params) {
         return [
@@ -7902,6 +8531,11 @@ class ClusterDoorLockServer
         [3, 'localEndTime'],
     ])
 
+    static SchemaCommandGetYearDaySchedule = TlvObject({
+        yearDayIndex: TlvField(0,TlvUInt8),
+        userIndex: TlvField(1,TlvUInt16),
+    })
+
     static TemplateCommandGetYearDaySchedule = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.YearDayIndex },
@@ -7913,6 +8547,14 @@ class ClusterDoorLockServer
         [0, 'yearDayIndex'],
         [1, 'userIndex'],
     ])
+
+    static SchemaCommandGetYearDayScheduleResponse = TlvObject({
+        yearDayIndex: TlvField(0,TlvUInt8),
+        userIndex: TlvField(1,TlvUInt16),
+        status: TlvField(2,TlvUInt8),
+        localStartTime: TlvField(3,TlvUInt32),
+        localEndTime: TlvField(4,TlvUInt32),
+    })
 
     static TemplateCommandGetYearDayScheduleResponse = function(params) {
         return [
@@ -7932,6 +8574,11 @@ class ClusterDoorLockServer
         [4, 'localEndTime'],
     ])
 
+    static SchemaCommandClearYearDaySchedule = TlvObject({
+        yearDayIndex: TlvField(0,TlvUInt8),
+        userIndex: TlvField(1,TlvUInt16),
+    })
+
     static TemplateCommandClearYearDaySchedule = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.YearDayIndex },
@@ -7943,6 +8590,13 @@ class ClusterDoorLockServer
         [0, 'yearDayIndex'],
         [1, 'userIndex'],
     ])
+
+    static SchemaCommandSetHolidaySchedule = TlvObject({
+        holidayIndex: TlvField(0,TlvUInt8),
+        localStartTime: TlvField(1,TlvUInt32),
+        localEndTime: TlvField(2,TlvUInt32),
+        operatingMode: TlvField(3,TlvUInt8),
+    })
 
     static TemplateCommandSetHolidaySchedule = function(params) {
         return [
@@ -7960,6 +8614,10 @@ class ClusterDoorLockServer
         [3, 'operatingMode'],
     ])
 
+    static SchemaCommandGetHolidaySchedule = TlvObject({
+        holidayIndex: TlvField(0,TlvUInt8),
+    })
+
     static TemplateCommandGetHolidaySchedule = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.HolidayIndex },
@@ -7969,6 +8627,14 @@ class ClusterDoorLockServer
     static MapCommandGetHolidaySchedule = new Map([
         [0, 'holidayIndex'],
     ])
+
+    static SchemaCommandGetHolidayScheduleResponse = TlvObject({
+        holidayIndex: TlvField(0,TlvUInt8),
+        status: TlvField(1,TlvUInt8),
+        localStartTime: TlvField(2,TlvUInt32),
+        localEndTime: TlvField(3,TlvUInt32),
+        operatingMode: TlvField(4,TlvUInt8),
+    })
 
     static TemplateCommandGetHolidayScheduleResponse = function(params) {
         return [
@@ -7988,6 +8654,10 @@ class ClusterDoorLockServer
         [4, 'operatingMode'],
     ])
 
+    static SchemaCommandClearHolidaySchedule = TlvObject({
+        holidayIndex: TlvField(0,TlvUInt8),
+    })
+
     static TemplateCommandClearHolidaySchedule = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.HolidayIndex },
@@ -7997,6 +8667,16 @@ class ClusterDoorLockServer
     static MapCommandClearHolidaySchedule = new Map([
         [0, 'holidayIndex'],
     ])
+
+    static SchemaCommandSetUser = TlvObject({
+        operationType: TlvField(0,TlvUInt8),
+        userIndex: TlvField(1,TlvUInt16),
+        userName: TlvField(2,TlvString),
+        userUniqueId: TlvField(3,TlvUInt32),
+        userStatus: TlvField(4,TlvUInt8),
+        userType: TlvField(5,TlvUInt8),
+        credentialRule: TlvField(6,TlvUInt8),
+    })
 
     static TemplateCommandSetUser = function(params) {
         return [
@@ -8020,6 +8700,10 @@ class ClusterDoorLockServer
         [6, 'credentialRule'],
     ])
 
+    static SchemaCommandGetUser = TlvObject({
+        userIndex: TlvField(0,TlvUInt16),
+    })
+
     static TemplateCommandGetUser = function(params) {
         return [
           { 'tag': 0, 'type': 'uint16_t', 'value': params.UserIndex },
@@ -8029,6 +8713,19 @@ class ClusterDoorLockServer
     static MapCommandGetUser = new Map([
         [0, 'userIndex'],
     ])
+
+    static SchemaCommandGetUserResponse = TlvObject({
+        userIndex: TlvField(0,TlvUInt16),
+        userName: TlvField(1,TlvString),
+        userUniqueId: TlvField(2,TlvUInt32),
+        userStatus: TlvField(3,TlvUInt8),
+        userType: TlvField(4,TlvUInt8),
+        credentialRule: TlvField(5,TlvUInt8),
+        credentials: TlvField(6,TlvArray),
+        creatorFabricIndex: TlvField(7,TlvUInt64),
+        lastModifiedFabricIndex: TlvField(8,TlvUInt64),
+        nextUserIndex: TlvField(9,TlvUInt16),
+    })
 
     static TemplateCommandGetUserResponse = function(params) {
         return [
@@ -8058,6 +8755,10 @@ class ClusterDoorLockServer
         [9, 'nextUserIndex'],
     ])
 
+    static SchemaCommandClearUser = TlvObject({
+        userIndex: TlvField(0,TlvUInt16),
+    })
+
     static TemplateCommandClearUser = function(params) {
         return [
           { 'tag': 0, 'type': 'uint16_t', 'value': params.UserIndex },
@@ -8067,6 +8768,15 @@ class ClusterDoorLockServer
     static MapCommandClearUser = new Map([
         [0, 'userIndex'],
     ])
+
+    static SchemaCommandSetCredential = TlvObject({
+        operationType: TlvField(0,TlvUInt8),
+        credential: TlvField(1,TlvObject),
+        credentialData: TlvField(2,TlvByteString),
+        userIndex: TlvField(3,TlvUInt16),
+        userStatus: TlvField(4,TlvUInt8),
+        userType: TlvField(5,TlvUInt8),
+    })
 
     static TemplateCommandSetCredential = function(params) {
         return [
@@ -8088,6 +8798,12 @@ class ClusterDoorLockServer
         [5, 'userType'],
     ])
 
+    static SchemaCommandSetCredentialResponse = TlvObject({
+        status: TlvField(0,TlvUInt8),
+        userIndex: TlvField(1,TlvUInt16),
+        nextCredentialIndex: TlvField(2,TlvUInt16),
+    })
+
     static TemplateCommandSetCredentialResponse = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.Status },
@@ -8102,6 +8818,10 @@ class ClusterDoorLockServer
         [2, 'nextCredentialIndex'],
     ])
 
+    static SchemaCommandGetCredentialStatus = TlvObject({
+        credential: TlvField(0,TlvObject),
+    })
+
     static TemplateCommandGetCredentialStatus = function(params) {
         return [
           { 'tag': 0, 'type': 'struct', 'value': [] }, // params.Credential
@@ -8111,6 +8831,14 @@ class ClusterDoorLockServer
     static MapCommandGetCredentialStatus = new Map([
         [0, 'credential'],
     ])
+
+    static SchemaCommandGetCredentialStatusResponse = TlvObject({
+        credentialExists: TlvField(0,Tlvbool),
+        userIndex: TlvField(1,TlvUInt16),
+        creatorFabricIndex: TlvField(2,TlvUInt64),
+        lastModifiedFabricIndex: TlvField(3,TlvUInt64),
+        nextCredentialIndex: TlvField(4,TlvUInt16),
+    })
 
     static TemplateCommandGetCredentialStatusResponse = function(params) {
         return [
@@ -8129,6 +8857,10 @@ class ClusterDoorLockServer
         [3, 'lastModifiedFabricIndex'],
         [4, 'nextCredentialIndex'],
     ])
+
+    static SchemaCommandClearCredential = TlvObject({
+        credential: TlvField(0,TlvObject),
+    })
 
     static TemplateCommandClearCredential = function(params) {
         return [
@@ -8687,6 +9419,9 @@ class ClusterWindowCoveringServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandUpOrOpen = TlvObject({
+    })
+
     static TemplateCommandUpOrOpen = function(params) {
         return [
         ]
@@ -8694,6 +9429,9 @@ class ClusterWindowCoveringServer
 
     static MapCommandUpOrOpen = new Map([
     ])
+
+    static SchemaCommandDownOrClose = TlvObject({
+    })
 
     static TemplateCommandDownOrClose = function(params) {
         return [
@@ -8703,6 +9441,9 @@ class ClusterWindowCoveringServer
     static MapCommandDownOrClose = new Map([
     ])
 
+    static SchemaCommandStopMotion = TlvObject({
+    })
+
     static TemplateCommandStopMotion = function(params) {
         return [
         ]
@@ -8710,6 +9451,10 @@ class ClusterWindowCoveringServer
 
     static MapCommandStopMotion = new Map([
     ])
+
+    static SchemaCommandGoToLiftValue = TlvObject({
+        liftValue: TlvField(0,TlvUInt16),
+    })
 
     static TemplateCommandGoToLiftValue = function(params) {
         return [
@@ -8721,6 +9466,10 @@ class ClusterWindowCoveringServer
         [0, 'liftValue'],
     ])
 
+    static SchemaCommandGoToLiftPercentage = TlvObject({
+        liftPercent100thsValue: TlvField(0,Tlvchip::Percent100ths),
+    })
+
     static TemplateCommandGoToLiftPercentage = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::Percent100ths', 'value': params.LiftPercent100thsValue },
@@ -8731,6 +9480,10 @@ class ClusterWindowCoveringServer
         [0, 'liftPercent100thsValue'],
     ])
 
+    static SchemaCommandGoToTiltValue = TlvObject({
+        tiltValue: TlvField(0,TlvUInt16),
+    })
+
     static TemplateCommandGoToTiltValue = function(params) {
         return [
           { 'tag': 0, 'type': 'uint16_t', 'value': params.TiltValue },
@@ -8740,6 +9493,10 @@ class ClusterWindowCoveringServer
     static MapCommandGoToTiltValue = new Map([
         [0, 'tiltValue'],
     ])
+
+    static SchemaCommandGoToTiltPercentage = TlvObject({
+        tiltPercent100thsValue: TlvField(0,Tlvchip::Percent100ths),
+    })
 
     static TemplateCommandGoToTiltPercentage = function(params) {
         return [
@@ -9064,6 +9821,10 @@ class ClusterBarrierControlServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandBarrierControlGoToPercent = TlvObject({
+        percentOpen: TlvField(0,TlvUInt8),
+    })
+
     static TemplateCommandBarrierControlGoToPercent = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.PercentOpen },
@@ -9073,6 +9834,9 @@ class ClusterBarrierControlServer
     static MapCommandBarrierControlGoToPercent = new Map([
         [0, 'percentOpen'],
     ])
+
+    static SchemaCommandBarrierControlStop = TlvObject({
+    })
 
     static TemplateCommandBarrierControlStop = function(params) {
         return [
@@ -9240,7 +10004,7 @@ class ClusterBarrierControlServer
  */
 class ClusterPumpConfigurationAndControl
 {
-    static CLUSTER_NAME = 'PUMP_CONFIG_CONTROL_CLUSTER'
+    static CLUSTER_NAME = 'PUMP_CONFIGURATION_AND_CONTROL_CLUSTER'
     static CLUSTER_ID = 0x0200
 
     static Command = {
@@ -9600,6 +10364,11 @@ class ClusterThermostatServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandSetpointRaiseLower = TlvObject({
+        mode: TlvField(0,TlvUInt8),
+        amount: TlvField(1,TlvInt8_t),
+    })
+
     static TemplateCommandSetpointRaiseLower = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.Mode },
@@ -9611,6 +10380,13 @@ class ClusterThermostatServer
         [0, 'mode'],
         [1, 'amount'],
     ])
+
+    static SchemaCommandGetWeeklyScheduleResponse = TlvObject({
+        numberOfTransitionsForSequence: TlvField(0,TlvUInt8),
+        dayOfWeekForSequence: TlvField(1,TlvUInt8),
+        modeForSequence: TlvField(2,TlvUInt8),
+        transitions: TlvField(3,TlvArray),
+    })
 
     static TemplateCommandGetWeeklyScheduleResponse = function(params) {
         return [
@@ -9628,6 +10404,13 @@ class ClusterThermostatServer
         [3, 'transitions'],
     ])
 
+    static SchemaCommandSetWeeklySchedule = TlvObject({
+        numberOfTransitionsForSequence: TlvField(0,TlvUInt8),
+        dayOfWeekForSequence: TlvField(1,TlvUInt8),
+        modeForSequence: TlvField(2,TlvUInt8),
+        transitions: TlvField(3,TlvArray),
+    })
+
     static TemplateCommandSetWeeklySchedule = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.NumberOfTransitionsForSequence },
@@ -9644,6 +10427,11 @@ class ClusterThermostatServer
         [3, 'transitions'],
     ])
 
+    static SchemaCommandGetWeeklySchedule = TlvObject({
+        daysToReturn: TlvField(0,TlvUInt8),
+        modeToReturn: TlvField(1,TlvUInt8),
+    })
+
     static TemplateCommandGetWeeklySchedule = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.DaysToReturn },
@@ -9655,6 +10443,9 @@ class ClusterThermostatServer
         [0, 'daysToReturn'],
         [1, 'modeToReturn'],
     ])
+
+    static SchemaCommandClearWeeklySchedule = TlvObject({
+    })
 
     static TemplateCommandClearWeeklySchedule = function(params) {
         return [
@@ -10302,7 +11093,7 @@ class ClusterFanControlServer
  */
 class ClusterThermostatUserInterfaceConfiguration
 {
-    static CLUSTER_NAME = 'THERMOSTAT_UI_CONFIG_CLUSTER'
+    static CLUSTER_NAME = 'THERMOSTAT_USER_INTERFACE_CONFIGURATION_CLUSTER'
     static CLUSTER_ID = 0x0204
 
     static Command = {
@@ -10519,6 +11310,14 @@ class ClusterColorControlServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandMoveToHue = TlvObject({
+        hue: TlvField(0,TlvUInt8),
+        direction: TlvField(1,TlvUInt8),
+        transitionTime: TlvField(2,TlvUInt16),
+        optionsMask: TlvField(3,TlvUInt8),
+        optionsOverride: TlvField(4,TlvUInt8),
+    })
+
     static TemplateCommandMoveToHue = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.Hue },
@@ -10537,6 +11336,13 @@ class ClusterColorControlServer
         [4, 'optionsOverride'],
     ])
 
+    static SchemaCommandMoveHue = TlvObject({
+        moveMode: TlvField(0,TlvUInt8),
+        rate: TlvField(1,TlvUInt8),
+        optionsMask: TlvField(2,TlvUInt8),
+        optionsOverride: TlvField(3,TlvUInt8),
+    })
+
     static TemplateCommandMoveHue = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.MoveMode },
@@ -10552,6 +11358,14 @@ class ClusterColorControlServer
         [2, 'optionsMask'],
         [3, 'optionsOverride'],
     ])
+
+    static SchemaCommandStepHue = TlvObject({
+        stepMode: TlvField(0,TlvUInt8),
+        stepSize: TlvField(1,TlvUInt8),
+        transitionTime: TlvField(2,TlvUInt8),
+        optionsMask: TlvField(3,TlvUInt8),
+        optionsOverride: TlvField(4,TlvUInt8),
+    })
 
     static TemplateCommandStepHue = function(params) {
         return [
@@ -10571,6 +11385,13 @@ class ClusterColorControlServer
         [4, 'optionsOverride'],
     ])
 
+    static SchemaCommandMoveToSaturation = TlvObject({
+        saturation: TlvField(0,TlvUInt8),
+        transitionTime: TlvField(1,TlvUInt16),
+        optionsMask: TlvField(2,TlvUInt8),
+        optionsOverride: TlvField(3,TlvUInt8),
+    })
+
     static TemplateCommandMoveToSaturation = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.Saturation },
@@ -10587,6 +11408,13 @@ class ClusterColorControlServer
         [3, 'optionsOverride'],
     ])
 
+    static SchemaCommandMoveSaturation = TlvObject({
+        moveMode: TlvField(0,TlvUInt8),
+        rate: TlvField(1,TlvUInt8),
+        optionsMask: TlvField(2,TlvUInt8),
+        optionsOverride: TlvField(3,TlvUInt8),
+    })
+
     static TemplateCommandMoveSaturation = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.MoveMode },
@@ -10602,6 +11430,14 @@ class ClusterColorControlServer
         [2, 'optionsMask'],
         [3, 'optionsOverride'],
     ])
+
+    static SchemaCommandStepSaturation = TlvObject({
+        stepMode: TlvField(0,TlvUInt8),
+        stepSize: TlvField(1,TlvUInt8),
+        transitionTime: TlvField(2,TlvUInt8),
+        optionsMask: TlvField(3,TlvUInt8),
+        optionsOverride: TlvField(4,TlvUInt8),
+    })
 
     static TemplateCommandStepSaturation = function(params) {
         return [
@@ -10621,6 +11457,14 @@ class ClusterColorControlServer
         [4, 'optionsOverride'],
     ])
 
+    static SchemaCommandMoveToHueAndSaturation = TlvObject({
+        hue: TlvField(0,TlvUInt8),
+        saturation: TlvField(1,TlvUInt8),
+        transitionTime: TlvField(2,TlvUInt16),
+        optionsMask: TlvField(3,TlvUInt8),
+        optionsOverride: TlvField(4,TlvUInt8),
+    })
+
     static TemplateCommandMoveToHueAndSaturation = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.Hue },
@@ -10638,6 +11482,14 @@ class ClusterColorControlServer
         [3, 'optionsMask'],
         [4, 'optionsOverride'],
     ])
+
+    static SchemaCommandMoveToColor = TlvObject({
+        colorX: TlvField(0,TlvUInt16),
+        colorY: TlvField(1,TlvUInt16),
+        transitionTime: TlvField(2,TlvUInt16),
+        optionsMask: TlvField(3,TlvUInt8),
+        optionsOverride: TlvField(4,TlvUInt8),
+    })
 
     static TemplateCommandMoveToColor = function(params) {
         return [
@@ -10657,6 +11509,13 @@ class ClusterColorControlServer
         [4, 'optionsOverride'],
     ])
 
+    static SchemaCommandMoveColor = TlvObject({
+        rateX: TlvField(0,TlvInt16_t),
+        rateY: TlvField(1,TlvInt16_t),
+        optionsMask: TlvField(2,TlvUInt8),
+        optionsOverride: TlvField(3,TlvUInt8),
+    })
+
     static TemplateCommandMoveColor = function(params) {
         return [
           { 'tag': 0, 'type': 'int16_t', 'value': params.RateX },
@@ -10672,6 +11531,14 @@ class ClusterColorControlServer
         [2, 'optionsMask'],
         [3, 'optionsOverride'],
     ])
+
+    static SchemaCommandStepColor = TlvObject({
+        stepX: TlvField(0,TlvInt16_t),
+        stepY: TlvField(1,TlvInt16_t),
+        transitionTime: TlvField(2,TlvUInt16),
+        optionsMask: TlvField(3,TlvUInt8),
+        optionsOverride: TlvField(4,TlvUInt8),
+    })
 
     static TemplateCommandStepColor = function(params) {
         return [
@@ -10691,6 +11558,13 @@ class ClusterColorControlServer
         [4, 'optionsOverride'],
     ])
 
+    static SchemaCommandMoveToColorTemperature = TlvObject({
+        colorTemperature: TlvField(0,TlvUInt16),
+        transitionTime: TlvField(1,TlvUInt16),
+        optionsMask: TlvField(2,TlvUInt8),
+        optionsOverride: TlvField(3,TlvUInt8),
+    })
+
     static TemplateCommandMoveToColorTemperature = function(params) {
         return [
           { 'tag': 0, 'type': 'uint16_t', 'value': params.ColorTemperature },
@@ -10706,6 +11580,14 @@ class ClusterColorControlServer
         [2, 'optionsMask'],
         [3, 'optionsOverride'],
     ])
+
+    static SchemaCommandEnhancedMoveToHue = TlvObject({
+        enhancedHue: TlvField(0,TlvUInt16),
+        direction: TlvField(1,TlvUInt8),
+        transitionTime: TlvField(2,TlvUInt16),
+        optionsMask: TlvField(3,TlvUInt8),
+        optionsOverride: TlvField(4,TlvUInt8),
+    })
 
     static TemplateCommandEnhancedMoveToHue = function(params) {
         return [
@@ -10725,6 +11607,13 @@ class ClusterColorControlServer
         [4, 'optionsOverride'],
     ])
 
+    static SchemaCommandEnhancedMoveHue = TlvObject({
+        moveMode: TlvField(0,TlvUInt8),
+        rate: TlvField(1,TlvUInt16),
+        optionsMask: TlvField(2,TlvUInt8),
+        optionsOverride: TlvField(3,TlvUInt8),
+    })
+
     static TemplateCommandEnhancedMoveHue = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.MoveMode },
@@ -10740,6 +11629,14 @@ class ClusterColorControlServer
         [2, 'optionsMask'],
         [3, 'optionsOverride'],
     ])
+
+    static SchemaCommandEnhancedStepHue = TlvObject({
+        stepMode: TlvField(0,TlvUInt8),
+        stepSize: TlvField(1,TlvUInt16),
+        transitionTime: TlvField(2,TlvUInt16),
+        optionsMask: TlvField(3,TlvUInt8),
+        optionsOverride: TlvField(4,TlvUInt8),
+    })
 
     static TemplateCommandEnhancedStepHue = function(params) {
         return [
@@ -10759,6 +11656,14 @@ class ClusterColorControlServer
         [4, 'optionsOverride'],
     ])
 
+    static SchemaCommandEnhancedMoveToHueAndSaturation = TlvObject({
+        enhancedHue: TlvField(0,TlvUInt16),
+        saturation: TlvField(1,TlvUInt8),
+        transitionTime: TlvField(2,TlvUInt16),
+        optionsMask: TlvField(3,TlvUInt8),
+        optionsOverride: TlvField(4,TlvUInt8),
+    })
+
     static TemplateCommandEnhancedMoveToHueAndSaturation = function(params) {
         return [
           { 'tag': 0, 'type': 'uint16_t', 'value': params.EnhancedHue },
@@ -10776,6 +11681,16 @@ class ClusterColorControlServer
         [3, 'optionsMask'],
         [4, 'optionsOverride'],
     ])
+
+    static SchemaCommandColorLoopSet = TlvObject({
+        updateFlags: TlvField(0,TlvUInt8),
+        action: TlvField(1,TlvUInt8),
+        direction: TlvField(2,TlvUInt8),
+        time: TlvField(3,TlvUInt16),
+        startHue: TlvField(4,TlvUInt16),
+        optionsMask: TlvField(5,TlvUInt8),
+        optionsOverride: TlvField(6,TlvUInt8),
+    })
 
     static TemplateCommandColorLoopSet = function(params) {
         return [
@@ -10799,6 +11714,11 @@ class ClusterColorControlServer
         [6, 'optionsOverride'],
     ])
 
+    static SchemaCommandStopMoveStep = TlvObject({
+        optionsMask: TlvField(0,TlvUInt8),
+        optionsOverride: TlvField(1,TlvUInt8),
+    })
+
     static TemplateCommandStopMoveStep = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.OptionsMask },
@@ -10810,6 +11730,15 @@ class ClusterColorControlServer
         [0, 'optionsMask'],
         [1, 'optionsOverride'],
     ])
+
+    static SchemaCommandMoveColorTemperature = TlvObject({
+        moveMode: TlvField(0,TlvUInt8),
+        rate: TlvField(1,TlvUInt16),
+        colorTemperatureMinimumMireds: TlvField(2,TlvUInt16),
+        colorTemperatureMaximumMireds: TlvField(3,TlvUInt16),
+        optionsMask: TlvField(4,TlvUInt8),
+        optionsOverride: TlvField(5,TlvUInt8),
+    })
 
     static TemplateCommandMoveColorTemperature = function(params) {
         return [
@@ -10830,6 +11759,16 @@ class ClusterColorControlServer
         [4, 'optionsMask'],
         [5, 'optionsOverride'],
     ])
+
+    static SchemaCommandStepColorTemperature = TlvObject({
+        stepMode: TlvField(0,TlvUInt8),
+        stepSize: TlvField(1,TlvUInt16),
+        transitionTime: TlvField(2,TlvUInt16),
+        colorTemperatureMinimumMireds: TlvField(3,TlvUInt16),
+        colorTemperatureMaximumMireds: TlvField(4,TlvUInt16),
+        optionsMask: TlvField(5,TlvUInt8),
+        optionsOverride: TlvField(6,TlvUInt8),
+    })
 
     static TemplateCommandStepColorTemperature = function(params) {
         return [
@@ -11562,7 +12501,7 @@ class ClusterIlluminanceMeasurementServer
  */
 class ClusterTemperatureMeasurement
 {
-    static CLUSTER_NAME = 'TEMP_MEASUREMENT_CLUSTER'
+    static CLUSTER_NAME = 'TEMPERATURE_MEASUREMENT_CLUSTER'
     static CLUSTER_ID = 0x0402
 
     static Command = {
@@ -12453,6 +13392,10 @@ class ClusterChannelServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandChangeChannel = TlvObject({
+        match: TlvField(0,TlvString),
+    })
+
     static TemplateCommandChangeChannel = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::CharSpan', 'value': params.Match },
@@ -12462,6 +13405,11 @@ class ClusterChannelServer
     static MapCommandChangeChannel = new Map([
         [0, 'match'],
     ])
+
+    static SchemaCommandChangeChannelResponse = TlvObject({
+        status: TlvField(0,TlvUInt8),
+        data: TlvField(1,TlvString),
+    })
 
     static TemplateCommandChangeChannelResponse = function(params) {
         return [
@@ -12475,6 +13423,11 @@ class ClusterChannelServer
         [1, 'data'],
     ])
 
+    static SchemaCommandChangeChannelByNumber = TlvObject({
+        majorNumber: TlvField(0,TlvUInt16),
+        minorNumber: TlvField(1,TlvUInt16),
+    })
+
     static TemplateCommandChangeChannelByNumber = function(params) {
         return [
           { 'tag': 0, 'type': 'uint16_t', 'value': params.MajorNumber },
@@ -12486,6 +13439,10 @@ class ClusterChannelServer
         [0, 'majorNumber'],
         [1, 'minorNumber'],
     ])
+
+    static SchemaCommandSkipChannel = TlvObject({
+        count: TlvField(0,TlvUInt16),
+    })
 
     static TemplateCommandSkipChannel = function(params) {
         return [
@@ -12648,6 +13605,11 @@ class ClusterTargetNavigatorServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandNavigateTarget = TlvObject({
+        target: TlvField(0,TlvUInt8),
+        data: TlvField(1,TlvString),
+    })
+
     static TemplateCommandNavigateTarget = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.Target },
@@ -12659,6 +13621,11 @@ class ClusterTargetNavigatorServer
         [0, 'target'],
         [1, 'data'],
     ])
+
+    static SchemaCommandNavigateTargetResponse = TlvObject({
+        status: TlvField(0,TlvUInt8),
+        data: TlvField(1,TlvString),
+    })
 
     static TemplateCommandNavigateTargetResponse = function(params) {
         return [
@@ -12817,6 +13784,9 @@ class ClusterMediaPlaybackServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandPlay = TlvObject({
+    })
+
     static TemplateCommandPlay = function(params) {
         return [
         ]
@@ -12824,6 +13794,9 @@ class ClusterMediaPlaybackServer
 
     static MapCommandPlay = new Map([
     ])
+
+    static SchemaCommandPause = TlvObject({
+    })
 
     static TemplateCommandPause = function(params) {
         return [
@@ -12833,6 +13806,9 @@ class ClusterMediaPlaybackServer
     static MapCommandPause = new Map([
     ])
 
+    static SchemaCommandStopPlayback = TlvObject({
+    })
+
     static TemplateCommandStopPlayback = function(params) {
         return [
         ]
@@ -12840,6 +13816,9 @@ class ClusterMediaPlaybackServer
 
     static MapCommandStopPlayback = new Map([
     ])
+
+    static SchemaCommandStartOver = TlvObject({
+    })
 
     static TemplateCommandStartOver = function(params) {
         return [
@@ -12849,6 +13828,9 @@ class ClusterMediaPlaybackServer
     static MapCommandStartOver = new Map([
     ])
 
+    static SchemaCommandPrevious = TlvObject({
+    })
+
     static TemplateCommandPrevious = function(params) {
         return [
         ]
@@ -12856,6 +13838,9 @@ class ClusterMediaPlaybackServer
 
     static MapCommandPrevious = new Map([
     ])
+
+    static SchemaCommandNext = TlvObject({
+    })
 
     static TemplateCommandNext = function(params) {
         return [
@@ -12865,6 +13850,9 @@ class ClusterMediaPlaybackServer
     static MapCommandNext = new Map([
     ])
 
+    static SchemaCommandRewind = TlvObject({
+    })
+
     static TemplateCommandRewind = function(params) {
         return [
         ]
@@ -12873,6 +13861,9 @@ class ClusterMediaPlaybackServer
     static MapCommandRewind = new Map([
     ])
 
+    static SchemaCommandFastForward = TlvObject({
+    })
+
     static TemplateCommandFastForward = function(params) {
         return [
         ]
@@ -12880,6 +13871,10 @@ class ClusterMediaPlaybackServer
 
     static MapCommandFastForward = new Map([
     ])
+
+    static SchemaCommandSkipForward = TlvObject({
+        deltaPositionMilliseconds: TlvField(0,TlvUInt64),
+    })
 
     static TemplateCommandSkipForward = function(params) {
         return [
@@ -12891,6 +13886,10 @@ class ClusterMediaPlaybackServer
         [0, 'deltaPositionMilliseconds'],
     ])
 
+    static SchemaCommandSkipBackward = TlvObject({
+        deltaPositionMilliseconds: TlvField(0,TlvUInt64),
+    })
+
     static TemplateCommandSkipBackward = function(params) {
         return [
           { 'tag': 0, 'type': 'uint64_t', 'value': params.DeltaPositionMilliseconds },
@@ -12900,6 +13899,11 @@ class ClusterMediaPlaybackServer
     static MapCommandSkipBackward = new Map([
         [0, 'deltaPositionMilliseconds'],
     ])
+
+    static SchemaCommandPlaybackResponse = TlvObject({
+        status: TlvField(0,TlvUInt8),
+        data: TlvField(1,TlvString),
+    })
 
     static TemplateCommandPlaybackResponse = function(params) {
         return [
@@ -12912,6 +13916,10 @@ class ClusterMediaPlaybackServer
         [0, 'status'],
         [1, 'data'],
     ])
+
+    static SchemaCommandSeek = TlvObject({
+        position: TlvField(0,TlvUInt64),
+    })
 
     static TemplateCommandSeek = function(params) {
         return [
@@ -13160,6 +14168,10 @@ class ClusterMediaInputServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandSelectInput = TlvObject({
+        index: TlvField(0,TlvUInt8),
+    })
+
     static TemplateCommandSelectInput = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.Index },
@@ -13170,6 +14182,9 @@ class ClusterMediaInputServer
         [0, 'index'],
     ])
 
+    static SchemaCommandShowInputStatus = TlvObject({
+    })
+
     static TemplateCommandShowInputStatus = function(params) {
         return [
         ]
@@ -13178,6 +14193,9 @@ class ClusterMediaInputServer
     static MapCommandShowInputStatus = new Map([
     ])
 
+    static SchemaCommandHideInputStatus = TlvObject({
+    })
+
     static TemplateCommandHideInputStatus = function(params) {
         return [
         ]
@@ -13185,6 +14203,11 @@ class ClusterMediaInputServer
 
     static MapCommandHideInputStatus = new Map([
     ])
+
+    static SchemaCommandRenameInput = TlvObject({
+        index: TlvField(0,TlvUInt8),
+        name: TlvField(1,TlvString),
+    })
 
     static TemplateCommandRenameInput = function(params) {
         return [
@@ -13339,6 +14362,9 @@ class ClusterLowPowerServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandSleep = TlvObject({
+    })
+
     static TemplateCommandSleep = function(params) {
         return [
         ]
@@ -13454,6 +14480,10 @@ class ClusterKeypadInputServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandSendKey = TlvObject({
+        keyCode: TlvField(0,TlvUInt8),
+    })
+
     static TemplateCommandSendKey = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.KeyCode },
@@ -13463,6 +14493,10 @@ class ClusterKeypadInputServer
     static MapCommandSendKey = new Map([
         [0, 'keyCode'],
     ])
+
+    static SchemaCommandSendKeyResponse = TlvObject({
+        status: TlvField(0,TlvUInt8),
+    })
 
     static TemplateCommandSendKeyResponse = function(params) {
         return [
@@ -13562,7 +14596,7 @@ class ClusterKeypadInputServer
  */
 class ClusterContentLauncher
 {
-    static CLUSTER_NAME = 'CONTENT_LAUNCH_CLUSTER'
+    static CLUSTER_NAME = 'CONTENT_LAUNCHER_CLUSTER'
     static CLUSTER_ID = 0x050A
 
     static Command = {
@@ -13591,6 +14625,12 @@ class ClusterContentLauncherServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandLaunchContent = TlvObject({
+        search: TlvField(0,TlvObject),
+        autoPlay: TlvField(1,Tlvbool),
+        data: TlvField(2,TlvString),
+    })
+
     static TemplateCommandLaunchContent = function(params) {
         return [
           { 'tag': 0, 'type': 'struct', 'value': [] }, // params.Search
@@ -13605,6 +14645,12 @@ class ClusterContentLauncherServer
         [2, 'data'],
     ])
 
+    static SchemaCommandLaunchURL = TlvObject({
+        contentURL: TlvField(0,TlvString),
+        displayString: TlvField(1,TlvString),
+        brandingInformation: TlvField(2,TlvObject),
+    })
+
     static TemplateCommandLaunchURL = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::CharSpan', 'value': params.ContentURL },
@@ -13618,6 +14664,11 @@ class ClusterContentLauncherServer
         [1, 'displayString'],
         [2, 'brandingInformation'],
     ])
+
+    static SchemaCommandLaunchResponse = TlvObject({
+        status: TlvField(0,TlvUInt8),
+        data: TlvField(1,TlvString),
+    })
 
     static TemplateCommandLaunchResponse = function(params) {
         return [
@@ -13768,6 +14819,10 @@ class ClusterAudioOutputServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandSelectOutput = TlvObject({
+        index: TlvField(0,TlvUInt8),
+    })
+
     static TemplateCommandSelectOutput = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.Index },
@@ -13777,6 +14832,11 @@ class ClusterAudioOutputServer
     static MapCommandSelectOutput = new Map([
         [0, 'index'],
     ])
+
+    static SchemaCommandRenameOutput = TlvObject({
+        index: TlvField(0,TlvUInt8),
+        name: TlvField(1,TlvString),
+    })
 
     static TemplateCommandRenameOutput = function(params) {
         return [
@@ -13922,6 +14982,11 @@ class ClusterApplicationLauncherServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandLaunchApp = TlvObject({
+        application: TlvField(0,TlvObject),
+        data: TlvField(1,TlvByteString),
+    })
+
     static TemplateCommandLaunchApp = function(params) {
         return [
           { 'tag': 0, 'type': 'struct', 'value': [] }, // params.Application
@@ -13934,6 +14999,10 @@ class ClusterApplicationLauncherServer
         [1, 'data'],
     ])
 
+    static SchemaCommandStopApp = TlvObject({
+        application: TlvField(0,TlvObject),
+    })
+
     static TemplateCommandStopApp = function(params) {
         return [
           { 'tag': 0, 'type': 'struct', 'value': [] }, // params.Application
@@ -13944,6 +15013,10 @@ class ClusterApplicationLauncherServer
         [0, 'application'],
     ])
 
+    static SchemaCommandHideApp = TlvObject({
+        application: TlvField(0,TlvObject),
+    })
+
     static TemplateCommandHideApp = function(params) {
         return [
           { 'tag': 0, 'type': 'struct', 'value': [] }, // params.Application
@@ -13953,6 +15026,11 @@ class ClusterApplicationLauncherServer
     static MapCommandHideApp = new Map([
         [0, 'application'],
     ])
+
+    static SchemaCommandLauncherResponse = TlvObject({
+        status: TlvField(0,TlvUInt8),
+        data: TlvField(1,TlvByteString),
+    })
 
     static TemplateCommandLauncherResponse = function(params) {
         return [
@@ -14272,6 +15350,10 @@ class ClusterAccountLoginServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandGetSetupPIN = TlvObject({
+        tempAccountIdentifier: TlvField(0,TlvString),
+    })
+
     static TemplateCommandGetSetupPIN = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::CharSpan', 'value': params.TempAccountIdentifier },
@@ -14282,6 +15364,10 @@ class ClusterAccountLoginServer
         [0, 'tempAccountIdentifier'],
     ])
 
+    static SchemaCommandGetSetupPINResponse = TlvObject({
+        setupPIN: TlvField(0,TlvString),
+    })
+
     static TemplateCommandGetSetupPINResponse = function(params) {
         return [
           { 'tag': 0, 'type': 'chip::CharSpan', 'value': params.SetupPIN },
@@ -14291,6 +15377,11 @@ class ClusterAccountLoginServer
     static MapCommandGetSetupPINResponse = new Map([
         [0, 'setupPIN'],
     ])
+
+    static SchemaCommandLogin = TlvObject({
+        tempAccountIdentifier: TlvField(0,TlvString),
+        setupPIN: TlvField(1,TlvString),
+    })
 
     static TemplateCommandLogin = function(params) {
         return [
@@ -14303,6 +15394,9 @@ class ClusterAccountLoginServer
         [0, 'tempAccountIdentifier'],
         [1, 'setupPIN'],
     ])
+
+    static SchemaCommandLogout = TlvObject({
+    })
 
     static TemplateCommandLogout = function(params) {
         return [
@@ -14570,6 +15664,13 @@ class ClusterElectricalMeasurementServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandGetProfileInfoResponseCommand = TlvObject({
+        profileCount: TlvField(0,TlvUInt8),
+        profileIntervalPeriod: TlvField(1,TlvUInt8),
+        maxNumberOfIntervals: TlvField(2,TlvUInt8),
+        listOfAttributes: TlvField(3,TlvArray),
+    })
+
     static TemplateCommandGetProfileInfoResponseCommand = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.ProfileCount },
@@ -14586,6 +15687,9 @@ class ClusterElectricalMeasurementServer
         [3, 'listOfAttributes'],
     ])
 
+    static SchemaCommandGetProfileInfoCommand = TlvObject({
+    })
+
     static TemplateCommandGetProfileInfoCommand = function(params) {
         return [
         ]
@@ -14593,6 +15697,15 @@ class ClusterElectricalMeasurementServer
 
     static MapCommandGetProfileInfoCommand = new Map([
     ])
+
+    static SchemaCommandGetMeasurementProfileResponseCommand = TlvObject({
+        startTime: TlvField(0,TlvUInt32),
+        status: TlvField(1,TlvUInt8),
+        profileIntervalPeriod: TlvField(2,TlvUInt8),
+        numberOfIntervalsDelivered: TlvField(3,TlvUInt8),
+        attributeId: TlvField(4,TlvUInt16),
+        intervals: TlvField(5,TlvArray),
+    })
 
     static TemplateCommandGetMeasurementProfileResponseCommand = function(params) {
         return [
@@ -14613,6 +15726,12 @@ class ClusterElectricalMeasurementServer
         [4, 'attributeId'],
         [5, 'intervals'],
     ])
+
+    static SchemaCommandGetMeasurementProfileCommand = TlvObject({
+        attributeId: TlvField(0,TlvUInt16),
+        startTime: TlvField(1,TlvUInt32),
+        numberOfIntervals: TlvField(2,TlvUInt8),
+    })
 
     static TemplateCommandGetMeasurementProfileCommand = function(params) {
         return [
@@ -15622,11 +16741,11 @@ class ClusterElectricalMeasurementServer
 }
 
 /**
- * ClusterTestCluster
+ * ClusterUnitTesting
  */
-class ClusterTestCluster
+class ClusterUnitTesting
 {
-    static CLUSTER_NAME = 'TEST_CLUSTER'
+    static CLUSTER_NAME = 'UNIT_TESTING_CLUSTER'
     static CLUSTER_ID = 0xFFF1FC05
 
     static Command = {
@@ -15668,9 +16787,9 @@ class ClusterTestCluster
 }
 
 /**
- * ClusterTestClusterServer
+ * ClusterUnitTestingServer
  */
-class ClusterTestClusterServer
+class ClusterUnitTestingServer
 {
     static Attribute = {
         Boolean: 0,
@@ -15766,6 +16885,9 @@ class ClusterTestClusterServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandTest = TlvObject({
+    })
+
     static TemplateCommandTest = function(params) {
         return [
         ]
@@ -15773,6 +16895,10 @@ class ClusterTestClusterServer
 
     static MapCommandTest = new Map([
     ])
+
+    static SchemaCommandTestSpecificResponse = TlvObject({
+        returnValue: TlvField(0,TlvUInt8),
+    })
 
     static TemplateCommandTestSpecificResponse = function(params) {
         return [
@@ -15784,6 +16910,9 @@ class ClusterTestClusterServer
         [0, 'returnValue'],
     ])
 
+    static SchemaCommandTestNotHandled = TlvObject({
+    })
+
     static TemplateCommandTestNotHandled = function(params) {
         return [
         ]
@@ -15791,6 +16920,10 @@ class ClusterTestClusterServer
 
     static MapCommandTestNotHandled = new Map([
     ])
+
+    static SchemaCommandTestAddArgumentsResponse = TlvObject({
+        returnValue: TlvField(0,TlvUInt8),
+    })
 
     static TemplateCommandTestAddArgumentsResponse = function(params) {
         return [
@@ -15802,6 +16935,9 @@ class ClusterTestClusterServer
         [0, 'returnValue'],
     ])
 
+    static SchemaCommandTestSpecific = TlvObject({
+    })
+
     static TemplateCommandTestSpecific = function(params) {
         return [
         ]
@@ -15809,6 +16945,10 @@ class ClusterTestClusterServer
 
     static MapCommandTestSpecific = new Map([
     ])
+
+    static SchemaCommandTestSimpleArgumentResponse = TlvObject({
+        returnValue: TlvField(0,Tlvbool),
+    })
 
     static TemplateCommandTestSimpleArgumentResponse = function(params) {
         return [
@@ -15820,6 +16960,9 @@ class ClusterTestClusterServer
         [0, 'returnValue'],
     ])
 
+    static SchemaCommandTestUnknownCommand = TlvObject({
+    })
+
     static TemplateCommandTestUnknownCommand = function(params) {
         return [
         ]
@@ -15827,6 +16970,15 @@ class ClusterTestClusterServer
 
     static MapCommandTestUnknownCommand = new Map([
     ])
+
+    static SchemaCommandTestStructArrayArgumentResponse = TlvObject({
+        arg1: TlvField(0,TlvArray),
+        arg2: TlvField(1,TlvArray),
+        arg3: TlvField(2,TlvArray),
+        arg4: TlvField(3,TlvArray),
+        arg5: TlvField(4,TlvUInt8),
+        arg6: TlvField(5,Tlvbool),
+    })
 
     static TemplateCommandTestStructArrayArgumentResponse = function(params) {
         return [
@@ -15848,6 +17000,11 @@ class ClusterTestClusterServer
         [5, 'arg6'],
     ])
 
+    static SchemaCommandTestAddArguments = TlvObject({
+        arg1: TlvField(0,TlvUInt8),
+        arg2: TlvField(1,TlvUInt8),
+    })
+
     static TemplateCommandTestAddArguments = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.Arg1 },
@@ -15860,6 +17017,10 @@ class ClusterTestClusterServer
         [1, 'arg2'],
     ])
 
+    static SchemaCommandTestListInt8UReverseResponse = TlvObject({
+        arg1: TlvField(0,TlvArray),
+    })
+
     static TemplateCommandTestListInt8UReverseResponse = function(params) {
         return [
           { 'tag': 0, 'type': 'array', 'value': [] }, // params.Arg1
@@ -15870,6 +17031,10 @@ class ClusterTestClusterServer
         [0, 'arg1'],
     ])
 
+    static SchemaCommandTestSimpleArgumentRequest = TlvObject({
+        arg1: TlvField(0,Tlvbool),
+    })
+
     static TemplateCommandTestSimpleArgumentRequest = function(params) {
         return [
           { 'tag': 0, 'type': 'bool', 'value': params.Arg1 },
@@ -15879,6 +17044,11 @@ class ClusterTestClusterServer
     static MapCommandTestSimpleArgumentRequest = new Map([
         [0, 'arg1'],
     ])
+
+    static SchemaCommandTestEnumsResponse = TlvObject({
+        arg1: TlvField(0,TlvUInt16),
+        arg2: TlvField(1,TlvUInt8),
+    })
 
     static TemplateCommandTestEnumsResponse = function(params) {
         return [
@@ -15891,6 +17061,15 @@ class ClusterTestClusterServer
         [0, 'arg1'],
         [1, 'arg2'],
     ])
+
+    static SchemaCommandTestStructArrayArgumentRequest = TlvObject({
+        arg1: TlvField(0,TlvArray),
+        arg2: TlvField(1,TlvArray),
+        arg3: TlvField(2,TlvArray),
+        arg4: TlvField(3,TlvArray),
+        arg5: TlvField(4,TlvUInt8),
+        arg6: TlvField(5,Tlvbool),
+    })
 
     static TemplateCommandTestStructArrayArgumentRequest = function(params) {
         return [
@@ -15912,6 +17091,13 @@ class ClusterTestClusterServer
         [5, 'arg6'],
     ])
 
+    static SchemaCommandTestNullableOptionalResponse = TlvObject({
+        wasPresent: TlvField(0,Tlvbool),
+        wasNull: TlvField(1,Tlvbool),
+        value: TlvField(2,TlvUInt8),
+        originalValue: TlvField(3,TlvUInt8),
+    })
+
     static TemplateCommandTestNullableOptionalResponse = function(params) {
         return [
           { 'tag': 0, 'type': 'bool', 'value': params.WasPresent },
@@ -15928,6 +17114,10 @@ class ClusterTestClusterServer
         [3, 'originalValue'],
     ])
 
+    static SchemaCommandTestStructArgumentRequest = TlvObject({
+        arg1: TlvField(0,TlvObject),
+    })
+
     static TemplateCommandTestStructArgumentRequest = function(params) {
         return [
           { 'tag': 0, 'type': 'struct', 'value': [] }, // params.Arg1
@@ -15937,6 +17127,37 @@ class ClusterTestClusterServer
     static MapCommandTestStructArgumentRequest = new Map([
         [0, 'arg1'],
     ])
+
+    static SchemaCommandTestComplexNullableOptionalResponse = TlvObject({
+        nullableIntWasNull: TlvField(0,Tlvbool),
+        nullableIntValue: TlvField(1,TlvUInt16),
+        optionalIntWasPresent: TlvField(2,Tlvbool),
+        optionalIntValue: TlvField(3,TlvUInt16),
+        nullableOptionalIntWasPresent: TlvField(4,Tlvbool),
+        nullableOptionalIntWasNull: TlvField(5,Tlvbool),
+        nullableOptionalIntValue: TlvField(6,TlvUInt16),
+        nullableStringWasNull: TlvField(7,Tlvbool),
+        nullableStringValue: TlvField(8,TlvString),
+        optionalStringWasPresent: TlvField(9,Tlvbool),
+        optionalStringValue: TlvField(10,TlvString),
+        nullableOptionalStringWasPresent: TlvField(11,Tlvbool),
+        nullableOptionalStringWasNull: TlvField(12,Tlvbool),
+        nullableOptionalStringValue: TlvField(13,TlvString),
+        nullableStructWasNull: TlvField(14,Tlvbool),
+        nullableStructValue: TlvField(15,TlvObject),
+        optionalStructWasPresent: TlvField(16,Tlvbool),
+        optionalStructValue: TlvField(17,TlvObject),
+        nullableOptionalStructWasPresent: TlvField(18,Tlvbool),
+        nullableOptionalStructWasNull: TlvField(19,Tlvbool),
+        nullableOptionalStructValue: TlvField(20,TlvObject),
+        nullableListWasNull: TlvField(21,Tlvbool),
+        nullableListValue: TlvField(22,TlvArray),
+        optionalListWasPresent: TlvField(23,Tlvbool),
+        optionalListValue: TlvField(24,TlvArray),
+        nullableOptionalListWasPresent: TlvField(25,Tlvbool),
+        nullableOptionalListWasNull: TlvField(26,Tlvbool),
+        nullableOptionalListValue: TlvField(27,TlvArray),
+    })
 
     static TemplateCommandTestComplexNullableOptionalResponse = function(params) {
         return [
@@ -16002,6 +17223,10 @@ class ClusterTestClusterServer
         [27, 'nullableOptionalListValue'],
     ])
 
+    static SchemaCommandTestNestedStructArgumentRequest = TlvObject({
+        arg1: TlvField(0,TlvObject),
+    })
+
     static TemplateCommandTestNestedStructArgumentRequest = function(params) {
         return [
           { 'tag': 0, 'type': 'struct', 'value': [] }, // params.Arg1
@@ -16011,6 +17236,10 @@ class ClusterTestClusterServer
     static MapCommandTestNestedStructArgumentRequest = new Map([
         [0, 'arg1'],
     ])
+
+    static SchemaCommandBooleanResponse = TlvObject({
+        value: TlvField(0,Tlvbool),
+    })
 
     static TemplateCommandBooleanResponse = function(params) {
         return [
@@ -16022,6 +17251,10 @@ class ClusterTestClusterServer
         [0, 'value'],
     ])
 
+    static SchemaCommandTestListStructArgumentRequest = TlvObject({
+        arg1: TlvField(0,TlvArray),
+    })
+
     static TemplateCommandTestListStructArgumentRequest = function(params) {
         return [
           { 'tag': 0, 'type': 'array', 'value': [] }, // params.Arg1
@@ -16031,6 +17264,10 @@ class ClusterTestClusterServer
     static MapCommandTestListStructArgumentRequest = new Map([
         [0, 'arg1'],
     ])
+
+    static SchemaCommandSimpleStructResponse = TlvObject({
+        arg1: TlvField(0,TlvObject),
+    })
 
     static TemplateCommandSimpleStructResponse = function(params) {
         return [
@@ -16042,6 +17279,10 @@ class ClusterTestClusterServer
         [0, 'arg1'],
     ])
 
+    static SchemaCommandTestListInt8UArgumentRequest = TlvObject({
+        arg1: TlvField(0,TlvArray),
+    })
+
     static TemplateCommandTestListInt8UArgumentRequest = function(params) {
         return [
           { 'tag': 0, 'type': 'array', 'value': [] }, // params.Arg1
@@ -16051,6 +17292,10 @@ class ClusterTestClusterServer
     static MapCommandTestListInt8UArgumentRequest = new Map([
         [0, 'arg1'],
     ])
+
+    static SchemaCommandTestEmitTestEventResponse = TlvObject({
+        value: TlvField(0,TlvUInt64),
+    })
 
     static TemplateCommandTestEmitTestEventResponse = function(params) {
         return [
@@ -16062,6 +17307,10 @@ class ClusterTestClusterServer
         [0, 'value'],
     ])
 
+    static SchemaCommandTestNestedStructListArgumentRequest = TlvObject({
+        arg1: TlvField(0,TlvObject),
+    })
+
     static TemplateCommandTestNestedStructListArgumentRequest = function(params) {
         return [
           { 'tag': 0, 'type': 'struct', 'value': [] }, // params.Arg1
@@ -16071,6 +17320,10 @@ class ClusterTestClusterServer
     static MapCommandTestNestedStructListArgumentRequest = new Map([
         [0, 'arg1'],
     ])
+
+    static SchemaCommandTestEmitTestFabricScopedEventResponse = TlvObject({
+        value: TlvField(0,TlvUInt64),
+    })
 
     static TemplateCommandTestEmitTestFabricScopedEventResponse = function(params) {
         return [
@@ -16082,6 +17335,10 @@ class ClusterTestClusterServer
         [0, 'value'],
     ])
 
+    static SchemaCommandTestListNestedStructListArgumentRequest = TlvObject({
+        arg1: TlvField(0,TlvArray),
+    })
+
     static TemplateCommandTestListNestedStructListArgumentRequest = function(params) {
         return [
           { 'tag': 0, 'type': 'array', 'value': [] }, // params.Arg1
@@ -16092,6 +17349,10 @@ class ClusterTestClusterServer
         [0, 'arg1'],
     ])
 
+    static SchemaCommandTestListInt8UReverseRequest = TlvObject({
+        arg1: TlvField(0,TlvArray),
+    })
+
     static TemplateCommandTestListInt8UReverseRequest = function(params) {
         return [
           { 'tag': 0, 'type': 'array', 'value': [] }, // params.Arg1
@@ -16101,6 +17362,11 @@ class ClusterTestClusterServer
     static MapCommandTestListInt8UReverseRequest = new Map([
         [0, 'arg1'],
     ])
+
+    static SchemaCommandTestEnumsRequest = TlvObject({
+        arg1: TlvField(0,TlvUInt16),
+        arg2: TlvField(1,TlvUInt8),
+    })
 
     static TemplateCommandTestEnumsRequest = function(params) {
         return [
@@ -16114,6 +17380,10 @@ class ClusterTestClusterServer
         [1, 'arg2'],
     ])
 
+    static SchemaCommandTestNullableOptionalRequest = TlvObject({
+        arg1: TlvField(0,TlvUInt8),
+    })
+
     static TemplateCommandTestNullableOptionalRequest = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.Arg1 },
@@ -16123,6 +17393,21 @@ class ClusterTestClusterServer
     static MapCommandTestNullableOptionalRequest = new Map([
         [0, 'arg1'],
     ])
+
+    static SchemaCommandTestComplexNullableOptionalRequest = TlvObject({
+        nullableInt: TlvField(0,TlvUInt16),
+        optionalInt: TlvField(1,TlvUInt16),
+        nullableOptionalInt: TlvField(2,TlvUInt16),
+        nullableString: TlvField(3,TlvString),
+        optionalString: TlvField(4,TlvString),
+        nullableOptionalString: TlvField(5,TlvString),
+        nullableStruct: TlvField(6,TlvObject),
+        optionalStruct: TlvField(7,TlvObject),
+        nullableOptionalStruct: TlvField(8,TlvObject),
+        nullableList: TlvField(9,TlvArray),
+        optionalList: TlvField(10,TlvArray),
+        nullableOptionalList: TlvField(11,TlvArray),
+    })
 
     static TemplateCommandTestComplexNullableOptionalRequest = function(params) {
         return [
@@ -16156,6 +17441,10 @@ class ClusterTestClusterServer
         [11, 'nullableOptionalList'],
     ])
 
+    static SchemaCommandSimpleStructEchoRequest = TlvObject({
+        arg1: TlvField(0,TlvObject),
+    })
+
     static TemplateCommandSimpleStructEchoRequest = function(params) {
         return [
           { 'tag': 0, 'type': 'struct', 'value': [] }, // params.Arg1
@@ -16166,6 +17455,9 @@ class ClusterTestClusterServer
         [0, 'arg1'],
     ])
 
+    static SchemaCommandTimedInvokeRequest = TlvObject({
+    })
+
     static TemplateCommandTimedInvokeRequest = function(params) {
         return [
         ]
@@ -16173,6 +17465,10 @@ class ClusterTestClusterServer
 
     static MapCommandTimedInvokeRequest = new Map([
     ])
+
+    static SchemaCommandTestSimpleOptionalArgumentRequest = TlvObject({
+        arg1: TlvField(0,Tlvbool),
+    })
 
     static TemplateCommandTestSimpleOptionalArgumentRequest = function(params) {
         return [
@@ -16183,6 +17479,12 @@ class ClusterTestClusterServer
     static MapCommandTestSimpleOptionalArgumentRequest = new Map([
         [0, 'arg1'],
     ])
+
+    static SchemaCommandTestEmitTestEventRequest = TlvObject({
+        arg1: TlvField(0,TlvUInt8),
+        arg2: TlvField(1,TlvUInt8),
+        arg3: TlvField(2,Tlvbool),
+    })
 
     static TemplateCommandTestEmitTestEventRequest = function(params) {
         return [
@@ -16197,6 +17499,10 @@ class ClusterTestClusterServer
         [1, 'arg2'],
         [2, 'arg3'],
     ])
+
+    static SchemaCommandTestEmitTestFabricScopedEventRequest = TlvObject({
+        arg1: TlvField(0,TlvUInt8),
+    })
 
     static TemplateCommandTestEmitTestFabricScopedEventRequest = function(params) {
         return [
@@ -16218,609 +17524,609 @@ class ClusterTestClusterServer
         this._dataVersion = Random.getRandomUint32()
 
         this._attributes = {
-            0: { // ClusterTestClusterServer.Attribute.Boolean
+            0: { // ClusterUnitTestingServer.Attribute.Boolean
                 "name": "Boolean",
                 "type": "boolean",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            1: { // ClusterTestClusterServer.Attribute.Bitmap8
+            1: { // ClusterUnitTestingServer.Attribute.Bitmap8
                 "name": "Bitmap8",
                 "type": "Bitmap8MaskMap",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            2: { // ClusterTestClusterServer.Attribute.Bitmap16
+            2: { // ClusterUnitTestingServer.Attribute.Bitmap16
                 "name": "Bitmap16",
                 "type": "Bitmap16MaskMap",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            3: { // ClusterTestClusterServer.Attribute.Bitmap32
+            3: { // ClusterUnitTestingServer.Attribute.Bitmap32
                 "name": "Bitmap32",
                 "type": "Bitmap32MaskMap",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            4: { // ClusterTestClusterServer.Attribute.Bitmap64
+            4: { // ClusterUnitTestingServer.Attribute.Bitmap64
                 "name": "Bitmap64",
                 "type": "Bitmap64MaskMap",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            5: { // ClusterTestClusterServer.Attribute.Int8u
+            5: { // ClusterUnitTestingServer.Attribute.Int8u
                 "name": "Int8u",
                 "type": "int8u",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            6: { // ClusterTestClusterServer.Attribute.Int16u
+            6: { // ClusterUnitTestingServer.Attribute.Int16u
                 "name": "Int16u",
                 "type": "int16u",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            7: { // ClusterTestClusterServer.Attribute.Int24u
+            7: { // ClusterUnitTestingServer.Attribute.Int24u
                 "name": "Int24u",
                 "type": "int24u",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            8: { // ClusterTestClusterServer.Attribute.Int32u
+            8: { // ClusterUnitTestingServer.Attribute.Int32u
                 "name": "Int32u",
                 "type": "int32u",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            9: { // ClusterTestClusterServer.Attribute.Int40u
+            9: { // ClusterUnitTestingServer.Attribute.Int40u
                 "name": "Int40u",
                 "type": "int40u",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            10: { // ClusterTestClusterServer.Attribute.Int48u
+            10: { // ClusterUnitTestingServer.Attribute.Int48u
                 "name": "Int48u",
                 "type": "int48u",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            11: { // ClusterTestClusterServer.Attribute.Int56u
+            11: { // ClusterUnitTestingServer.Attribute.Int56u
                 "name": "Int56u",
                 "type": "int56u",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            12: { // ClusterTestClusterServer.Attribute.Int64u
+            12: { // ClusterUnitTestingServer.Attribute.Int64u
                 "name": "Int64u",
                 "type": "int64u",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            13: { // ClusterTestClusterServer.Attribute.Int8s
+            13: { // ClusterUnitTestingServer.Attribute.Int8s
                 "name": "Int8s",
                 "type": "int8s",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            14: { // ClusterTestClusterServer.Attribute.Int16s
+            14: { // ClusterUnitTestingServer.Attribute.Int16s
                 "name": "Int16s",
                 "type": "int16s",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            15: { // ClusterTestClusterServer.Attribute.Int24s
+            15: { // ClusterUnitTestingServer.Attribute.Int24s
                 "name": "Int24s",
                 "type": "int24s",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16: { // ClusterTestClusterServer.Attribute.Int32s
+            16: { // ClusterUnitTestingServer.Attribute.Int32s
                 "name": "Int32s",
                 "type": "int32s",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            17: { // ClusterTestClusterServer.Attribute.Int40s
+            17: { // ClusterUnitTestingServer.Attribute.Int40s
                 "name": "Int40s",
                 "type": "int40s",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            18: { // ClusterTestClusterServer.Attribute.Int48s
+            18: { // ClusterUnitTestingServer.Attribute.Int48s
                 "name": "Int48s",
                 "type": "int48s",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            19: { // ClusterTestClusterServer.Attribute.Int56s
+            19: { // ClusterUnitTestingServer.Attribute.Int56s
                 "name": "Int56s",
                 "type": "int56s",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            20: { // ClusterTestClusterServer.Attribute.Int64s
+            20: { // ClusterUnitTestingServer.Attribute.Int64s
                 "name": "Int64s",
                 "type": "int64s",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            21: { // ClusterTestClusterServer.Attribute.Enum8
+            21: { // ClusterUnitTestingServer.Attribute.Enum8
                 "name": "Enum8",
                 "type": "enum8",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            22: { // ClusterTestClusterServer.Attribute.Enum16
+            22: { // ClusterUnitTestingServer.Attribute.Enum16
                 "name": "Enum16",
                 "type": "enum16",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            23: { // ClusterTestClusterServer.Attribute.FloatSingle
+            23: { // ClusterUnitTestingServer.Attribute.FloatSingle
                 "name": "FloatSingle",
                 "type": "single",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            24: { // ClusterTestClusterServer.Attribute.FloatDouble
+            24: { // ClusterUnitTestingServer.Attribute.FloatDouble
                 "name": "FloatDouble",
                 "type": "double",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            25: { // ClusterTestClusterServer.Attribute.OctetString
+            25: { // ClusterUnitTestingServer.Attribute.OctetString
                 "name": "OctetString",
                 "type": "octet_string",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            26: { // ClusterTestClusterServer.Attribute.ListInt8u
+            26: { // ClusterUnitTestingServer.Attribute.ListInt8u
                 "name": "ListInt8u",
                 "type": "array",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            27: { // ClusterTestClusterServer.Attribute.ListOctetString
+            27: { // ClusterUnitTestingServer.Attribute.ListOctetString
                 "name": "ListOctetString",
                 "type": "array",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            28: { // ClusterTestClusterServer.Attribute.ListStructOctetString
+            28: { // ClusterUnitTestingServer.Attribute.ListStructOctetString
                 "name": "ListStructOctetString",
                 "type": "array",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            29: { // ClusterTestClusterServer.Attribute.LongOctetString
+            29: { // ClusterUnitTestingServer.Attribute.LongOctetString
                 "name": "LongOctetString",
                 "type": "long_octet_string",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            30: { // ClusterTestClusterServer.Attribute.CharString
+            30: { // ClusterUnitTestingServer.Attribute.CharString
                 "name": "CharString",
                 "type": "char_string",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            31: { // ClusterTestClusterServer.Attribute.LongCharString
+            31: { // ClusterUnitTestingServer.Attribute.LongCharString
                 "name": "LongCharString",
                 "type": "long_char_string",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            32: { // ClusterTestClusterServer.Attribute.EpochUs
+            32: { // ClusterUnitTestingServer.Attribute.EpochUs
                 "name": "EpochUs",
                 "type": "epoch_us",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            33: { // ClusterTestClusterServer.Attribute.EpochS
+            33: { // ClusterUnitTestingServer.Attribute.EpochS
                 "name": "EpochS",
                 "type": "epoch_s",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            34: { // ClusterTestClusterServer.Attribute.VendorId
+            34: { // ClusterUnitTestingServer.Attribute.VendorId
                 "name": "VendorId",
                 "type": "vendor_id",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            35: { // ClusterTestClusterServer.Attribute.ListNullablesAndOptionalsStruct
+            35: { // ClusterUnitTestingServer.Attribute.ListNullablesAndOptionalsStruct
                 "name": "ListNullablesAndOptionalsStruct",
                 "type": "array",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            36: { // ClusterTestClusterServer.Attribute.EnumAttr
+            36: { // ClusterUnitTestingServer.Attribute.EnumAttr
                 "name": "EnumAttr",
                 "type": "SimpleEnum",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            37: { // ClusterTestClusterServer.Attribute.StructAttr
+            37: { // ClusterUnitTestingServer.Attribute.StructAttr
                 "name": "StructAttr",
                 "type": "SimpleStruct",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            38: { // ClusterTestClusterServer.Attribute.RangeRestrictedInt8u
+            38: { // ClusterUnitTestingServer.Attribute.RangeRestrictedInt8u
                 "name": "RangeRestrictedInt8u",
                 "type": "int8u",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            39: { // ClusterTestClusterServer.Attribute.RangeRestrictedInt8s
+            39: { // ClusterUnitTestingServer.Attribute.RangeRestrictedInt8s
                 "name": "RangeRestrictedInt8s",
                 "type": "int8s",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            40: { // ClusterTestClusterServer.Attribute.RangeRestrictedInt16u
+            40: { // ClusterUnitTestingServer.Attribute.RangeRestrictedInt16u
                 "name": "RangeRestrictedInt16u",
                 "type": "int16u",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            41: { // ClusterTestClusterServer.Attribute.RangeRestrictedInt16s
+            41: { // ClusterUnitTestingServer.Attribute.RangeRestrictedInt16s
                 "name": "RangeRestrictedInt16s",
                 "type": "int16s",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            42: { // ClusterTestClusterServer.Attribute.ListLongOctetString
+            42: { // ClusterUnitTestingServer.Attribute.ListLongOctetString
                 "name": "ListLongOctetString",
                 "type": "array",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            43: { // ClusterTestClusterServer.Attribute.ListFabricScoped
+            43: { // ClusterUnitTestingServer.Attribute.ListFabricScoped
                 "name": "ListFabricScoped",
                 "type": "array",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            48: { // ClusterTestClusterServer.Attribute.TimedWriteBoolean
+            48: { // ClusterUnitTestingServer.Attribute.TimedWriteBoolean
                 "name": "TimedWriteBoolean",
                 "type": "boolean",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            49: { // ClusterTestClusterServer.Attribute.GeneralErrorBoolean
+            49: { // ClusterUnitTestingServer.Attribute.GeneralErrorBoolean
                 "name": "GeneralErrorBoolean",
                 "type": "boolean",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            50: { // ClusterTestClusterServer.Attribute.ClusterErrorBoolean
+            50: { // ClusterUnitTestingServer.Attribute.ClusterErrorBoolean
                 "name": "ClusterErrorBoolean",
                 "type": "boolean",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            255: { // ClusterTestClusterServer.Attribute.Unsupported
+            255: { // ClusterUnitTestingServer.Attribute.Unsupported
                 "name": "Unsupported",
                 "type": "boolean",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16384: { // ClusterTestClusterServer.Attribute.NullableBoolean
+            16384: { // ClusterUnitTestingServer.Attribute.NullableBoolean
                 "name": "NullableBoolean",
                 "type": "boolean",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16385: { // ClusterTestClusterServer.Attribute.NullableBitmap8
+            16385: { // ClusterUnitTestingServer.Attribute.NullableBitmap8
                 "name": "NullableBitmap8",
                 "type": "Bitmap8MaskMap",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16386: { // ClusterTestClusterServer.Attribute.NullableBitmap16
+            16386: { // ClusterUnitTestingServer.Attribute.NullableBitmap16
                 "name": "NullableBitmap16",
                 "type": "Bitmap16MaskMap",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16387: { // ClusterTestClusterServer.Attribute.NullableBitmap32
+            16387: { // ClusterUnitTestingServer.Attribute.NullableBitmap32
                 "name": "NullableBitmap32",
                 "type": "Bitmap32MaskMap",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16388: { // ClusterTestClusterServer.Attribute.NullableBitmap64
+            16388: { // ClusterUnitTestingServer.Attribute.NullableBitmap64
                 "name": "NullableBitmap64",
                 "type": "Bitmap64MaskMap",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16389: { // ClusterTestClusterServer.Attribute.NullableInt8u
+            16389: { // ClusterUnitTestingServer.Attribute.NullableInt8u
                 "name": "NullableInt8u",
                 "type": "int8u",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16390: { // ClusterTestClusterServer.Attribute.NullableInt16u
+            16390: { // ClusterUnitTestingServer.Attribute.NullableInt16u
                 "name": "NullableInt16u",
                 "type": "int16u",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16391: { // ClusterTestClusterServer.Attribute.NullableInt24u
+            16391: { // ClusterUnitTestingServer.Attribute.NullableInt24u
                 "name": "NullableInt24u",
                 "type": "int24u",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16392: { // ClusterTestClusterServer.Attribute.NullableInt32u
+            16392: { // ClusterUnitTestingServer.Attribute.NullableInt32u
                 "name": "NullableInt32u",
                 "type": "int32u",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16393: { // ClusterTestClusterServer.Attribute.NullableInt40u
+            16393: { // ClusterUnitTestingServer.Attribute.NullableInt40u
                 "name": "NullableInt40u",
                 "type": "int40u",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16394: { // ClusterTestClusterServer.Attribute.NullableInt48u
+            16394: { // ClusterUnitTestingServer.Attribute.NullableInt48u
                 "name": "NullableInt48u",
                 "type": "int48u",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16395: { // ClusterTestClusterServer.Attribute.NullableInt56u
+            16395: { // ClusterUnitTestingServer.Attribute.NullableInt56u
                 "name": "NullableInt56u",
                 "type": "int56u",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16396: { // ClusterTestClusterServer.Attribute.NullableInt64u
+            16396: { // ClusterUnitTestingServer.Attribute.NullableInt64u
                 "name": "NullableInt64u",
                 "type": "int64u",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16397: { // ClusterTestClusterServer.Attribute.NullableInt8s
+            16397: { // ClusterUnitTestingServer.Attribute.NullableInt8s
                 "name": "NullableInt8s",
                 "type": "int8s",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16398: { // ClusterTestClusterServer.Attribute.NullableInt16s
+            16398: { // ClusterUnitTestingServer.Attribute.NullableInt16s
                 "name": "NullableInt16s",
                 "type": "int16s",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16399: { // ClusterTestClusterServer.Attribute.NullableInt24s
+            16399: { // ClusterUnitTestingServer.Attribute.NullableInt24s
                 "name": "NullableInt24s",
                 "type": "int24s",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16400: { // ClusterTestClusterServer.Attribute.NullableInt32s
+            16400: { // ClusterUnitTestingServer.Attribute.NullableInt32s
                 "name": "NullableInt32s",
                 "type": "int32s",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16401: { // ClusterTestClusterServer.Attribute.NullableInt40s
+            16401: { // ClusterUnitTestingServer.Attribute.NullableInt40s
                 "name": "NullableInt40s",
                 "type": "int40s",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16402: { // ClusterTestClusterServer.Attribute.NullableInt48s
+            16402: { // ClusterUnitTestingServer.Attribute.NullableInt48s
                 "name": "NullableInt48s",
                 "type": "int48s",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16403: { // ClusterTestClusterServer.Attribute.NullableInt56s
+            16403: { // ClusterUnitTestingServer.Attribute.NullableInt56s
                 "name": "NullableInt56s",
                 "type": "int56s",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16404: { // ClusterTestClusterServer.Attribute.NullableInt64s
+            16404: { // ClusterUnitTestingServer.Attribute.NullableInt64s
                 "name": "NullableInt64s",
                 "type": "int64s",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16405: { // ClusterTestClusterServer.Attribute.NullableEnum8
+            16405: { // ClusterUnitTestingServer.Attribute.NullableEnum8
                 "name": "NullableEnum8",
                 "type": "enum8",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16406: { // ClusterTestClusterServer.Attribute.NullableEnum16
+            16406: { // ClusterUnitTestingServer.Attribute.NullableEnum16
                 "name": "NullableEnum16",
                 "type": "enum16",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16407: { // ClusterTestClusterServer.Attribute.NullableFloatSingle
+            16407: { // ClusterUnitTestingServer.Attribute.NullableFloatSingle
                 "name": "NullableFloatSingle",
                 "type": "single",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16408: { // ClusterTestClusterServer.Attribute.NullableFloatDouble
+            16408: { // ClusterUnitTestingServer.Attribute.NullableFloatDouble
                 "name": "NullableFloatDouble",
                 "type": "double",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16409: { // ClusterTestClusterServer.Attribute.NullableOctetString
+            16409: { // ClusterUnitTestingServer.Attribute.NullableOctetString
                 "name": "NullableOctetString",
                 "type": "octet_string",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16414: { // ClusterTestClusterServer.Attribute.NullableCharString
+            16414: { // ClusterUnitTestingServer.Attribute.NullableCharString
                 "name": "NullableCharString",
                 "type": "char_string",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16420: { // ClusterTestClusterServer.Attribute.NullableEnumAttr
+            16420: { // ClusterUnitTestingServer.Attribute.NullableEnumAttr
                 "name": "NullableEnumAttr",
                 "type": "SimpleEnum",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16421: { // ClusterTestClusterServer.Attribute.NullableStruct
+            16421: { // ClusterUnitTestingServer.Attribute.NullableStruct
                 "name": "NullableStruct",
                 "type": "SimpleStruct",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16422: { // ClusterTestClusterServer.Attribute.NullableRangeRestrictedInt8u
+            16422: { // ClusterUnitTestingServer.Attribute.NullableRangeRestrictedInt8u
                 "name": "NullableRangeRestrictedInt8u",
                 "type": "int8u",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16423: { // ClusterTestClusterServer.Attribute.NullableRangeRestrictedInt8s
+            16423: { // ClusterUnitTestingServer.Attribute.NullableRangeRestrictedInt8s
                 "name": "NullableRangeRestrictedInt8s",
                 "type": "int8s",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16424: { // ClusterTestClusterServer.Attribute.NullableRangeRestrictedInt16u
+            16424: { // ClusterUnitTestingServer.Attribute.NullableRangeRestrictedInt16u
                 "name": "NullableRangeRestrictedInt16u",
                 "type": "int16u",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16425: { // ClusterTestClusterServer.Attribute.NullableRangeRestrictedInt16s
+            16425: { // ClusterUnitTestingServer.Attribute.NullableRangeRestrictedInt16s
                 "name": "NullableRangeRestrictedInt16s",
                 "type": "int16s",
                 "nullable": true,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            16426: { // ClusterTestClusterServer.Attribute.WriteOnlyInt8u
+            16426: { // ClusterUnitTestingServer.Attribute.WriteOnlyInt8u
                 "name": "WriteOnlyInt8u",
                 "type": "int8u",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            65528: { // ClusterTestClusterServer.Attribute.GeneratedCommandList
+            65528: { // ClusterUnitTestingServer.Attribute.GeneratedCommandList
                 "name": "GeneratedCommandList",
                 "type": "array",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            65529: { // ClusterTestClusterServer.Attribute.AcceptedCommandList
+            65529: { // ClusterUnitTestingServer.Attribute.AcceptedCommandList
                 "name": "AcceptedCommandList",
                 "type": "array",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            65531: { // ClusterTestClusterServer.Attribute.AttributeList
+            65531: { // ClusterUnitTestingServer.Attribute.AttributeList
                 "name": "AttributeList",
                 "type": "array",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            65532: { // ClusterTestClusterServer.Attribute.FeatureMap
+            65532: { // ClusterUnitTestingServer.Attribute.FeatureMap
                 "name": "FeatureMap",
                 "type": "bitmap32",
                 "nullable": false,
                 "nosubscribe": true,
                 "readonly": true,
             },
-            65533: { // ClusterTestClusterServer.Attribute.ClusterRevision
+            65533: { // ClusterUnitTestingServer.Attribute.ClusterRevision
                 "name": "ClusterRevision",
                 "type": "int16u",
                 "nullable": false,
@@ -16843,40 +18149,40 @@ class ClusterTestClusterServer
         console.log(this.constructor.name+".onCommand "+path.CommandId)
         switch(path.CommandId)
         {
-            case ClusterTestCluster.Command.Test: this.onTest(msg, path); break;
-            case ClusterTestCluster.Command.TestSpecificResponse: this.onTestSpecificResponse(msg, path); break;
-            case ClusterTestCluster.Command.TestNotHandled: this.onTestNotHandled(msg, path); break;
-            case ClusterTestCluster.Command.TestAddArgumentsResponse: this.onTestAddArgumentsResponse(msg, path); break;
-            case ClusterTestCluster.Command.TestSpecific: this.onTestSpecific(msg, path); break;
-            case ClusterTestCluster.Command.TestSimpleArgumentResponse: this.onTestSimpleArgumentResponse(msg, path); break;
-            case ClusterTestCluster.Command.TestUnknownCommand: this.onTestUnknownCommand(msg, path); break;
-            case ClusterTestCluster.Command.TestStructArrayArgumentResponse: this.onTestStructArrayArgumentResponse(msg, path); break;
-            case ClusterTestCluster.Command.TestAddArguments: this.onTestAddArguments(msg, path); break;
-            case ClusterTestCluster.Command.TestListInt8UReverseResponse: this.onTestListInt8UReverseResponse(msg, path); break;
-            case ClusterTestCluster.Command.TestSimpleArgumentRequest: this.onTestSimpleArgumentRequest(msg, path); break;
-            case ClusterTestCluster.Command.TestEnumsResponse: this.onTestEnumsResponse(msg, path); break;
-            case ClusterTestCluster.Command.TestStructArrayArgumentRequest: this.onTestStructArrayArgumentRequest(msg, path); break;
-            case ClusterTestCluster.Command.TestNullableOptionalResponse: this.onTestNullableOptionalResponse(msg, path); break;
-            case ClusterTestCluster.Command.TestStructArgumentRequest: this.onTestStructArgumentRequest(msg, path); break;
-            case ClusterTestCluster.Command.TestComplexNullableOptionalResponse: this.onTestComplexNullableOptionalResponse(msg, path); break;
-            case ClusterTestCluster.Command.TestNestedStructArgumentRequest: this.onTestNestedStructArgumentRequest(msg, path); break;
-            case ClusterTestCluster.Command.BooleanResponse: this.onBooleanResponse(msg, path); break;
-            case ClusterTestCluster.Command.TestListStructArgumentRequest: this.onTestListStructArgumentRequest(msg, path); break;
-            case ClusterTestCluster.Command.SimpleStructResponse: this.onSimpleStructResponse(msg, path); break;
-            case ClusterTestCluster.Command.TestListInt8UArgumentRequest: this.onTestListInt8UArgumentRequest(msg, path); break;
-            case ClusterTestCluster.Command.TestEmitTestEventResponse: this.onTestEmitTestEventResponse(msg, path); break;
-            case ClusterTestCluster.Command.TestNestedStructListArgumentRequest: this.onTestNestedStructListArgumentRequest(msg, path); break;
-            case ClusterTestCluster.Command.TestEmitTestFabricScopedEventResponse: this.onTestEmitTestFabricScopedEventResponse(msg, path); break;
-            case ClusterTestCluster.Command.TestListNestedStructListArgumentRequest: this.onTestListNestedStructListArgumentRequest(msg, path); break;
-            case ClusterTestCluster.Command.TestListInt8UReverseRequest: this.onTestListInt8UReverseRequest(msg, path); break;
-            case ClusterTestCluster.Command.TestEnumsRequest: this.onTestEnumsRequest(msg, path); break;
-            case ClusterTestCluster.Command.TestNullableOptionalRequest: this.onTestNullableOptionalRequest(msg, path); break;
-            case ClusterTestCluster.Command.TestComplexNullableOptionalRequest: this.onTestComplexNullableOptionalRequest(msg, path); break;
-            case ClusterTestCluster.Command.SimpleStructEchoRequest: this.onSimpleStructEchoRequest(msg, path); break;
-            case ClusterTestCluster.Command.TimedInvokeRequest: this.onTimedInvokeRequest(msg, path); break;
-            case ClusterTestCluster.Command.TestSimpleOptionalArgumentRequest: this.onTestSimpleOptionalArgumentRequest(msg, path); break;
-            case ClusterTestCluster.Command.TestEmitTestEventRequest: this.onTestEmitTestEventRequest(msg, path); break;
-            case ClusterTestCluster.Command.TestEmitTestFabricScopedEventRequest: this.onTestEmitTestFabricScopedEventRequest(msg, path); break;
+            case ClusterUnitTesting.Command.Test: this.onTest(msg, path); break;
+            case ClusterUnitTesting.Command.TestSpecificResponse: this.onTestSpecificResponse(msg, path); break;
+            case ClusterUnitTesting.Command.TestNotHandled: this.onTestNotHandled(msg, path); break;
+            case ClusterUnitTesting.Command.TestAddArgumentsResponse: this.onTestAddArgumentsResponse(msg, path); break;
+            case ClusterUnitTesting.Command.TestSpecific: this.onTestSpecific(msg, path); break;
+            case ClusterUnitTesting.Command.TestSimpleArgumentResponse: this.onTestSimpleArgumentResponse(msg, path); break;
+            case ClusterUnitTesting.Command.TestUnknownCommand: this.onTestUnknownCommand(msg, path); break;
+            case ClusterUnitTesting.Command.TestStructArrayArgumentResponse: this.onTestStructArrayArgumentResponse(msg, path); break;
+            case ClusterUnitTesting.Command.TestAddArguments: this.onTestAddArguments(msg, path); break;
+            case ClusterUnitTesting.Command.TestListInt8UReverseResponse: this.onTestListInt8UReverseResponse(msg, path); break;
+            case ClusterUnitTesting.Command.TestSimpleArgumentRequest: this.onTestSimpleArgumentRequest(msg, path); break;
+            case ClusterUnitTesting.Command.TestEnumsResponse: this.onTestEnumsResponse(msg, path); break;
+            case ClusterUnitTesting.Command.TestStructArrayArgumentRequest: this.onTestStructArrayArgumentRequest(msg, path); break;
+            case ClusterUnitTesting.Command.TestNullableOptionalResponse: this.onTestNullableOptionalResponse(msg, path); break;
+            case ClusterUnitTesting.Command.TestStructArgumentRequest: this.onTestStructArgumentRequest(msg, path); break;
+            case ClusterUnitTesting.Command.TestComplexNullableOptionalResponse: this.onTestComplexNullableOptionalResponse(msg, path); break;
+            case ClusterUnitTesting.Command.TestNestedStructArgumentRequest: this.onTestNestedStructArgumentRequest(msg, path); break;
+            case ClusterUnitTesting.Command.BooleanResponse: this.onBooleanResponse(msg, path); break;
+            case ClusterUnitTesting.Command.TestListStructArgumentRequest: this.onTestListStructArgumentRequest(msg, path); break;
+            case ClusterUnitTesting.Command.SimpleStructResponse: this.onSimpleStructResponse(msg, path); break;
+            case ClusterUnitTesting.Command.TestListInt8UArgumentRequest: this.onTestListInt8UArgumentRequest(msg, path); break;
+            case ClusterUnitTesting.Command.TestEmitTestEventResponse: this.onTestEmitTestEventResponse(msg, path); break;
+            case ClusterUnitTesting.Command.TestNestedStructListArgumentRequest: this.onTestNestedStructListArgumentRequest(msg, path); break;
+            case ClusterUnitTesting.Command.TestEmitTestFabricScopedEventResponse: this.onTestEmitTestFabricScopedEventResponse(msg, path); break;
+            case ClusterUnitTesting.Command.TestListNestedStructListArgumentRequest: this.onTestListNestedStructListArgumentRequest(msg, path); break;
+            case ClusterUnitTesting.Command.TestListInt8UReverseRequest: this.onTestListInt8UReverseRequest(msg, path); break;
+            case ClusterUnitTesting.Command.TestEnumsRequest: this.onTestEnumsRequest(msg, path); break;
+            case ClusterUnitTesting.Command.TestNullableOptionalRequest: this.onTestNullableOptionalRequest(msg, path); break;
+            case ClusterUnitTesting.Command.TestComplexNullableOptionalRequest: this.onTestComplexNullableOptionalRequest(msg, path); break;
+            case ClusterUnitTesting.Command.SimpleStructEchoRequest: this.onSimpleStructEchoRequest(msg, path); break;
+            case ClusterUnitTesting.Command.TimedInvokeRequest: this.onTimedInvokeRequest(msg, path); break;
+            case ClusterUnitTesting.Command.TestSimpleOptionalArgumentRequest: this.onTestSimpleOptionalArgumentRequest(msg, path); break;
+            case ClusterUnitTesting.Command.TestEmitTestEventRequest: this.onTestEmitTestEventRequest(msg, path); break;
+            case ClusterUnitTesting.Command.TestEmitTestFabricScopedEventRequest: this.onTestEmitTestFabricScopedEventRequest(msg, path); break;
         }
     }
 
@@ -17120,6 +18426,14 @@ class ClusterFaultInjectionServer
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandFailAtFault = TlvObject({
+        type: TlvField(0,TlvUInt8),
+        id: TlvField(1,TlvUInt32),
+        numCallsToSkip: TlvField(2,TlvUInt32),
+        numCallsToFail: TlvField(3,TlvUInt32),
+        takeMutex: TlvField(4,Tlvbool),
+    })
+
     static TemplateCommandFailAtFault = function(params) {
         return [
           { 'tag': 0, 'type': 'uint8_t', 'value': params.Type },
@@ -17137,6 +18451,12 @@ class ClusterFaultInjectionServer
         [3, 'numCallsToFail'],
         [4, 'takeMutex'],
     ])
+
+    static SchemaCommandFailRandomlyAtFault = TlvObject({
+        type: TlvField(0,TlvUInt8),
+        id: TlvField(1,TlvUInt32),
+        percentage: TlvField(2,TlvUInt8),
+    })
 
     static TemplateCommandFailRandomlyAtFault = function(params) {
         return [
@@ -17299,6 +18619,6 @@ module.exports = {
     ClusterApplicationBasicServer,
     ClusterAccountLoginServer,
     ClusterElectricalMeasurementServer,
-    ClusterTestClusterServer,
+    ClusterUnitTestingServer,
     ClusterFaultInjectionServer,
 }

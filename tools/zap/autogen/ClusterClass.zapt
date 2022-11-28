@@ -54,10 +54,10 @@ class Cluster{{asUpperCamelCase name}}{{asUpperCamelCase side}}
     static SchemaCommand{{asUpperCamelCase name}} = TlvObject({
     {{#zcl_command_arguments}}
   {{#if isArray}}
-        {{asLowerCamelCase label}}: TlvField({{index}},Tlv{{asUnderlyingZclType type}}),
+        {{asLowerCamelCase label}}: TlvField({{index}},TlvArray),
   {{else}}
     {{#if_is_struct type}}
-        {{asLowerCamelCase label}}: TlvField({{index}},Tlv{{asUnderlyingZclType type}}),
+        {{asLowerCamelCase label}}: TlvField({{index}},TlvObject),
     {{else}}
         {{asLowerCamelCase label}}: TlvField({{index}},Tlv{{asUnderlyingZclType type}}),
     {{/if_is_struct}}
