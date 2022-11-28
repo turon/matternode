@@ -14,7 +14,12 @@
  * limitations under the License.
  */
 
-import { TlvObject, TlvField, TlvUInt16, TlvBoolean, TlvString } from '@project-chip/matter.js'
+import { 
+    TlvObject, TlvField, TlvBoolean, TlvString, TlvArray,
+    TlvUInt8, TlvUInt16, TlvUInt32, TlvUInt64, TlvInt8, TlvInt16, TlvInt32, TlvInt64,
+    TlvFloat, TlvDouble
+} from '@project-chip/matter.js'
+
 import { strict as assert } from 'assert'
 
 var theTestTlvVector = [
@@ -29,12 +34,49 @@ var theTestTlvVector = [
         jsObj: { field2: 1, field3: 0, field4: false },
     },
     {
-        name: "TlvObject: TlvString field",
+        name: "TlvObject: TlvString fields",
         schema: TlvObject({
             field1: TlvField(1, TlvString),
+            field2: TlvField(2, TlvString),
         }),
-        tlv: "152c010568656c6c6f18",
-        jsObj: { field1: "hello" },
+        tlv: "152c010648656c6c6f212c02174865792074686572652c20686f772061726520796f753f18",
+        jsObj: { field1: "Hello!", field2: "Hey there, how are you?" },
+    },
+    {
+        name: "TlvObject: TlvArray field",
+        schema: TlvObject({
+            field1: TlvField(1, TlvArray(TlvString)),
+        }),
+        tlv: "1536010c01610c01620c01630c037a7a7a1818",
+        jsObj: { field1: ["a", "b", "c", "zzz"] },
+    },
+    {
+        name: "TlvObject: TlvNumber fields",
+        schema: TlvObject({
+            fieldFloat: TlvField(1, TlvFloat),
+            fieldDouble: TlvField(2, TlvDouble),
+            fieldInt8: TlvField(3, TlvInt8),
+            fieldInt16: TlvField(4, TlvInt16),
+            fieldInt32: TlvField(5, TlvInt32),
+            fieldInt64: TlvField(6, TlvInt64),
+            fieldUInt8: TlvField(7, TlvUInt8),
+            fieldUInt16: TlvField(8, TlvUInt16),
+            fieldUInt32: TlvField(9, TlvUInt32),
+            fieldUInt64: TlvField(10, TlvUInt64),
+        }),
+        tlv: "152a010892cc452b022fdd24064192b9402003ff2004ff2005ff2006ff240701240801240901240a0118",
+        jsObj: { 
+            fieldFloat: 6546.25390625,
+            fieldDouble: 6546.254,
+            fieldInt8: -1,
+            fieldInt16: -1,
+            fieldInt32: -1,
+            fieldInt64: -1,
+            fieldUInt8: 1,
+            fieldUInt16: 1,
+            fieldUInt32: 1,
+            fieldUInt64: 1,
+        },
     },
 ]
 
