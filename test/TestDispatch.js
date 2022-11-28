@@ -22,6 +22,7 @@ const TestManager = require('./TestManager')
 require('./tlv/TestTlvCodec')
 require('./tlv/TestTlvJson')
 require('./tlv/TestTlvPase')
+require('./tlv/TestTlvSchema')
 
 // ======================================
 //           Message Tests
