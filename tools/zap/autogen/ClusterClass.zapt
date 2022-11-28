@@ -51,6 +51,20 @@ class Cluster{{asUpperCamelCase name}}{{asUpperCamelCase side}}
     //              COMMAND TEMPLATES
     // ============================================
 {{#zcl_commands}}
+    static SchemaCommand{{asUpperCamelCase name}} = TlvObject({
+    {{#zcl_command_arguments}}
+  {{#if isArray}}
+        {{asLowerCamelCase label}}: TlvField({{index}},Tlv{{asUnderlyingZclType type}}),
+  {{else}}
+    {{#if_is_struct type}}
+        {{asLowerCamelCase label}}: TlvField({{index}},Tlv{{asUnderlyingZclType type}}),
+    {{else}}
+        {{asLowerCamelCase label}}: TlvField({{index}},Tlv{{asUnderlyingZclType type}}),
+    {{/if_is_struct}}
+  {{/if}}
+    {{/zcl_command_arguments}}
+    })
+
     static TemplateCommand{{asUpperCamelCase name}} = function(params) {
         return [
   {{#zcl_command_arguments}}

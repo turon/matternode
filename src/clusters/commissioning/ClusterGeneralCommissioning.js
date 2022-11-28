@@ -18,6 +18,10 @@ const SRC = '../../'
 
 const Const = require(SRC+'Const')
 
+import {
+    TlvObject, TlvField, TlvString, TlvUInt8, TlvUInt16, TlvUInt64
+} from '@project-chip/matter.js'
+
 /**
  * ClusterGeneralCommissioning common constants shared by client and server.
  */
@@ -89,6 +93,37 @@ class ClusterGeneralCommissioning
     // ============================================
     //              COMMAND TEMPLATES
     // ============================================
+    static SchemaCommandArmFailSafe = TlvObject({
+        expiryLengthSeconds: TlvField(0, TlvUInt16),
+        breadcrumb: TlvField(1, TlvUInt64),
+    })
+
+    static SchemaCommandArmFailSafeResponse = TlvObject({
+        errorCode: TlvField(0, TlvUInt8),
+        debugText: TlvField(1, TlvString),
+    })
+
+    static SchemaCommandSetRegulatoryConfig = TlvObject({
+        location: TlvField(0, TlvUInt8),
+        countryCode: TlvField(1, TlvString),
+        breadcrumb: TlvField(2, TlvUInt64),
+    })
+
+    static SchemaCommandSetRegulatoryConfigResponse = TlvObject({
+        errorCode: TlvField(0, TlvUInt8),
+        debugText: TlvField(1, TlvString),
+    })
+
+    static SchemaCommandCommissioningComplete = TlvObject({
+        errorCode: TlvField(0, TlvUInt8),
+        debugText: TlvField(1, TlvString),
+    })
+
+    static SchemaCommandCommissioningCompleteResponse = TlvObject({
+        errorCode: TlvField(0, TlvUInt8),
+        debugText: TlvField(1, TlvString),
+    })
+
     static TemplateCommandArmFailSafe = function(params) {
         return [
           { 'tag': 0, 'type': 'uint16_t', 'value': params.ExpiryLengthSeconds },
