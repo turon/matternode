@@ -109,7 +109,7 @@ class Discovery {
         // logger.debug(response)
 
         var node
-        var ip
+        var ip = []
         var port
         var txt
         var service = 'matter'
@@ -122,8 +122,11 @@ class Discovery {
               service = 'matterc'
               node = entry['data']
             }
+            if (entry['type'] == "A") {
+              ip.push(entry['data'])
+            }
             if (entry['type'] == "AAAA") {
-              ip = entry['data']
+              ip.push(entry['data'])
             }
             if (entry['type'] == "SRV") {
               port = entry['data']['port']
@@ -132,8 +135,11 @@ class Discovery {
 
         // Support legacy devices with AAAA record in additionals.
         response['additionals'].forEach(function (entry) {
+          if (entry['type'] == "A") {
+            ip.push(entry['data'])
+          }
           if (entry['type'] == "AAAA") {
-            ip = entry['data']
+            ip.push(entry['data'])
           }
           if (entry['type'] == "SRV") {
             port = entry['data']['port']
@@ -146,7 +152,7 @@ class Discovery {
         if (node != undefined) {
           // Use console rather than logger to show in shell app.
           // TODO: move to shell via delegate hook.
-          console.log("mdns response: " + node + " @ [" + ip + "]:" + port + "  " + mdns.iface + "  service=" + service)
+          console.log("mdns response: " + node + " @ [" + ip.join(", ") + "]:" + port + "  " + mdns.iface + "  service=" + service)
       }
     }
 
